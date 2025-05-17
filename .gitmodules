@@ -36,3 +36,6 @@
 	path = src/ext/glfw
 	url = https://github.com/glfw/glfw.git
 
+[submodule "models"]
+	path = models
+	url = https://gitlab.cecs.anu.edu.au/u7527120/epiq-renderer-models.git
