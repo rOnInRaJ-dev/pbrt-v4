@@ -482,12 +482,16 @@ STAT_MEMORY_COUNTER("Memory/Film pixels", filmPixelMemory);
 
 // RGBFilm Method Definitions
 RGBFilm::RGBFilm(FilmBaseParameters p, const RGBColorSpace *colorSpace,
-                 Float maxComponentValue, bool writeFP16, Allocator alloc)
+                 Float maxComponentValue, bool writeFP16, Allocator alloc,
+                 bool useBilateralFilter, Float sigmaSpatial, Float sigmaRange)
     : FilmBase(p),
       pixels(p.pixelBounds, alloc),
       colorSpace(colorSpace),
       maxComponentValue(maxComponentValue),
-      writeFP16(writeFP16) {
+      writeFP16(writeFP16),
+      applyBilateral(useBilateralFilter),
+      bilateralSigmaSpatial(sigmaSpatial),
+      bilateralSigmaRange(sigmaRange){
     filterIntegral = filter.Integral();
     CHECK(!pixelBounds.IsEmpty());
     CHECK(colorSpace);
@@ -526,9 +530,23 @@ PBRT_CPU_GPU void RGBFilm::AddSplat(Point2f p, SampledSpectrum L, const SampledW
 
 void RGBFilm::WriteImage(ImageMetadata metadata, Float splatScale) {
     Image image = GetImage(&metadata, splatScale);
+
+    // Applying Bilateral Filter here
+    if(applyBilateral) {
+        ApplyBilateralFilter(image, bilateralSigmaSpatial, bilateralSigmaRange);
+    }
+
     LOG_VERBOSE("Writing image %s with bounds %s", filename, pixelBounds);
     image.Write(filename, metadata);
 }
+
+
+void RGBFilm::ApplyBilateralFilter(Image image, Float sigmaSpatial, Float sigmaRange) {
+    printf("hello bilateralfilter world \n");
+    printf("sigmaSpatial: %f \n", sigmaSpatial);
+    printf("sigmaRange: %f \n", sigmaRange);
+}
+
 
 Image RGBFilm::GetImage(ImageMetadata *metadata, Float splatScale) {
     // Convert image to RGB and compute final pixel values
@@ -573,6 +591,13 @@ std::string RGBFilm::ToString() const {
 RGBFilm *RGBFilm::Create(const ParameterDictionary &parameters, Float exposureTime,
                          Filter filter, const RGBColorSpace *colorSpace,
                          const FileLoc *loc, Allocator alloc) {
+
+    // Bilateral Filter Parameters
+    bool useBilateralFilter = parameters.GetOneBool("bilateral", false);
+    Float sigma_spatial = parameters.GetOneFloat("bilateral_sigma_spatial", 2.0);
+    Float sigma_range = parameters.GetOneFloat("bilateral_sigma_range", 0.1);
+
+
     Float maxComponentValue = parameters.GetOneFloat("maxcomponentvalue", Infinity);
     bool writeFP16 = parameters.GetOneBool("savefp16", true);
 
@@ -581,7 +606,7 @@ RGBFilm *RGBFilm::Create(const ParameterDictionary &parameters, Float exposureTi
     FilmBaseParameters filmBaseParameters(parameters, filter, sensor, loc);
 
     return alloc.new_object<RGBFilm>(filmBaseParameters, colorSpace, maxComponentValue,
-                                     writeFP16, alloc);
+                                     writeFP16, alloc, useBilateralFilter, sigma_spatial, sigma_range);
 }
 
 // GBufferFilm Method Definitions
