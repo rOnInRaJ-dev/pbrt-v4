@@ -286,7 +286,7 @@ class RGBFilm : public FilmBase {
     void AddSplat(Point2f p, SampledSpectrum v, const SampledWavelengths &lambda);
 
     void WriteImage(ImageMetadata metadata, Float splatScale = 1);
-    void ApplyBilateralFilter(Image image, Float sigmaSpatial, Float sigmaRange);
+    void ApplyBilateralFilter(Image &image, Float sigmaSpatial, Float sigmaRange);
     Image GetImage(ImageMetadata *metadata, Float splatScale = 1);
 
     std::string ToString() const;
