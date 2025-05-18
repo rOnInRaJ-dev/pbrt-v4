@@ -22,6 +22,7 @@ namespace pbrt {
 
             Transform &transform = instanceTransforms[i];
 
+            // Testing only
             transform = transform * scaler;
            
             auto transformMatrix = transform.GetMatrix();
