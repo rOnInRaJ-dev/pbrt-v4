@@ -269,6 +269,24 @@ PBRT_CPU_GPU inline Transform RotateFromTo(Vector3f from, Vector3f to) {
     return Transform(r, Transpose(r));
 }
 
+
+PBRT_CPU_GPU inline Transform AlignZToNormal(const Point3f &pt, const Vector3f &n) {
+    // Build a frame whose Z axis is `n` and origin at `pt`
+    Vector3f z  = Normalize(n);
+    Vector3f up = (std::abs(z.z) < 0.999f ? Vector3f(0,0,1) : Vector3f(1,0,0));
+    Vector3f x  = Normalize(Cross(up, z));
+    Vector3f y  = Cross(z, x);
+    // Row-major 4×4
+    Float m[4][4] = {
+        { x.x,  y.x,  z.x,  pt.x },
+        { x.y,  y.y,  z.y,  pt.y },
+        { x.z,  y.z,  z.z,  pt.z },
+        {   0,    0,    0,     1  }
+    };
+    return Transform(m);
+}
+
+
 PBRT_CPU_GPU inline Vector3fi Transform::operator()(const Vector3fi &v) const {
     Float x = Float(v.x), y = Float(v.y), z = Float(v.z);
     Vector3f vOutError;

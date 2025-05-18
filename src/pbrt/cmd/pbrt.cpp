@@ -22,8 +22,16 @@
 #include <pbrt/util/string.h>
 #include <pbrt/wavefront/wavefront.h>
 
+#include <pbrt/util/transform.h>
+
+#include <pbrt/pcgUtil/pbrt_exporter.h>
+#include <pbrt/pcgUtil/pcg_sampling.h>
+#include <pbrt/pcgUtil/procedural.h>
+#include <pbrt/pcgUtil/sampleTo3D.h>
+
 #include <string>
 #include <vector>
+
 
 using namespace pbrt;
 
@@ -276,20 +284,57 @@ int main(int argc, char *argv[]) {
         FormattingParserTarget formattingTarget(toPly, options.upgrade);
         ParseFiles(&formattingTarget, filenames);
     } else {
-        // Parse provided scene description files
-        BasicScene scene;
-        BasicSceneBuilder builder(&scene);
-        ParseFiles(&builder, filenames);
+        // load the ply trimesh
+        TriQuadMesh triQuad = TriQuadMesh::ReadPLY("myMesh.ply");
+        triQuad.ConvertToOnlyTriangles();
+        triQuad.ComputeNormals();    
 
-        // Render the scene
-        if (Options->useGPU || Options->wavefront)
-            RenderWavefront(scene);
-        else
-            RenderCPU(scene);
+        pbrt::PCGSampling sampler;
 
-        LOG_VERBOSE("Memory used after post-render cleanup: %s", GetCurrentRSS());
-        // Clean up after rendering the scene
-        CleanupPBRT();
-    }
+        std::vector<Float> densityMapData;
+        int nu, nv;
+
+        std::tie(densityMapData, nu, nv) = sampler.loadDensityMap("../samplefile.png");
+
+        // define the UV domain we want to sample over (i think this is done in sampleUVValues)
+        Bounds2f domain(Point2f(0, 0), Point2f(1, 1));
+
+        // get nSamples samples from the sampler
+        const int nSamples = 1000;
+        std::vector<Point2f> uvSamples = sampler.sampleUVValues({densityMapData, nu, nv}, nSamples);
+
+
+        // for each UV, project to 3D + normal, then build a transform
+        std::vector<Transform> sampleXforms;
+        sampleXforms.reserve(uvSamples.size());
+        for (Point2f uv : uvSamples) {
+            // returns a list of hit points + the interpolated normal
+            auto pts = FindSamplesOnMesh(&triQuad, uv);
+            if (pts.empty()) {continue;} 
+            
+                Vector3f n(0, 0, 1);
+                
+                sampleXforms.push_back(AlignZToNormal(pts[0], n));
+            }
+        }
+
+
+    // need to parse the 
+
+    // Parse provided scene description files
+    BasicScene scene;
+    BasicSceneBuilder builder(&scene);
+    ParseFiles(&builder, filenames);
+
+    // Render the scene
+    if (Options->useGPU || Options->wavefront)
+        RenderWavefront(scene);
+    else
+        RenderCPU(scene);
+
+    LOG_VERBOSE("Memory used after post-render cleanup: %s", GetCurrentRSS());
+    // Clean up after rendering the scene
+    CleanupPBRT();
+
     return 0;
 }

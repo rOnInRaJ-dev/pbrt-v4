@@ -1,0 +1,64 @@
+# Integrator "bdpt"
+#     "integer maxdepth" [ 33 ]
+# Integrator "path"
+#     "integer maxdepth" [ 3 ]
+Integrator "sppm"
+Sampler "independent"
+    "integer pixelsamples" [ 64 ]
+PixelFilter "triangle"
+    "float xradius" [ 1 ]
+    "float yradius" [ 1 ]
+Film "rgb"
+    "string filename" [ "rendered.png" ]
+    "integer yresolution" [ 720 ]
+    "integer xresolution" [ 1280 ]
+
+# ==========================
+#  Camera
+# ==========================
+
+# LookAt cameraX cameraY cameraZ   targetX targetY targetZ   0 1 0
+# use camera location and empty location from blender
+# NOTE: y and z are flipped from blender
+LookAt 24.2641 35.665 -52.6247   -0.442971 1.80118  3.65474    0 1 0
+
+#  flip x axis
+ConcatTransform [ 
+    -1 0 0 0
+    0 1 0 0
+    0 0 1 0
+    0 0 0 1 ]
+
+Camera "perspective"
+    "float fov" [ 32.9 ]   
+
+
+WorldBegin
+
+# ==========================
+#  Materials
+# ==========================
+
+
+# ==========================
+#  Meshes
+# ==========================
+
+Shape "plymesh"
+    "string filename" [ "cubeTriMesh.ply" ]
+
+
+# ==========================
+#  Light sources
+# ==========================
+
+# ambient light source
+LightSource "infinite" "rgb L" [ .2 .2 .2 ]
+
+#  sun light source
+LightSource "distant"
+    "rgb L" [ 4 4 4 ]                      
+    "point3 from" [ 100 100 -100 ]         
+    "point3 to"   [ 0 0 0 ]                
+
+
