@@ -7,17 +7,20 @@ namespace pbrt {
     
     class Procedural {
         public:
-        Procedural(std::string& filepath,
+        Procedural(const std::string& filepath,
                 const std::string &namedMaterial = "", // Optional 
+                const std::string &materialType = "", 
                 const std::string &texture = "",
                 const std::string &bumpMap = "",
                 const std::string &normalMap = "");
 
-        std::string constructPbrtShapeMaterialBlock();
+        std::string constructPbrtShapeBlock();
+        std::string constructPbrtMaterialBlock();
 
         private:
         std::string filepath;
         std::string namedMaterial;
+        std::string materialType;
         std::string texture;
         std::string bumpMap;
         std::string normalMap;

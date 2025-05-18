@@ -44,9 +44,11 @@ WorldBegin
 #  Meshes
 # ==========================
 
-Shape "plymesh"
-    "string filename" [ "cubeTriMesh.ply" ]
+# Shape "plymesh"
+#     "string filename" [ "cubeTriMesh.ply" ]
 
+# Import instances 
+Include "instances.pbrt"
 
 # ==========================
 #  Light sources

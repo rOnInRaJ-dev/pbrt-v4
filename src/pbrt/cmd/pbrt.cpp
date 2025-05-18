@@ -285,7 +285,7 @@ int main(int argc, char *argv[]) {
         ParseFiles(&formattingTarget, filenames);
     } else {
         // load the ply trimesh
-        TriQuadMesh triQuad = TriQuadMesh::ReadPLY("myMesh.ply");
+        TriQuadMesh triQuad = TriQuadMesh::ReadPLY("../src/pbrt/model/cubeTriMesh.ply");
         triQuad.ConvertToOnlyTriangles();
         triQuad.ComputeNormals();    
 
@@ -294,13 +294,13 @@ int main(int argc, char *argv[]) {
         std::vector<Float> densityMapData;
         int nu, nv;
 
-        std::tie(densityMapData, nu, nv) = sampler.loadDensityMap("../samplefile.png");
+        std::tie(densityMapData, nu, nv) = sampler.loadDensityMap("../src/pbrt/model/DensityMap.png");
 
         // define the UV domain we want to sample over (i think this is done in sampleUVValues)
         Bounds2f domain(Point2f(0, 0), Point2f(1, 1));
 
         // get nSamples samples from the sampler
-        const int nSamples = 1000;
+        const int nSamples = 50;
         std::vector<Point2f> uvSamples = sampler.sampleUVValues({densityMapData, nu, nv}, nSamples);
 
 
@@ -316,8 +316,16 @@ int main(int argc, char *argv[]) {
                 
                 sampleXforms.push_back(AlignZToNormal(pts[0], n));
             }
-        }
 
+            // TODO: Instance procedural
+            Procedural mesh("../src/pbrt/model/cubeTriMesh.ply");
+
+            // TODO: Instance exporter 
+            PBRTExporter exporter(mesh);
+
+            // TODO: Call the export method 
+            exporter.exportInstances(sampleXforms, "../src/pbrt/model/instances.pbrt");
+        }
 
     // need to parse the 
 

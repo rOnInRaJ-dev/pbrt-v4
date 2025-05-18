@@ -12,23 +12,32 @@ namespace pbrt {
     PBRTExporter::PBRTExporter(Procedural &procedural)
     : procedural(procedural) {}
 
-    void exportInstances(std::vector<std::pair<Vector3f, Vector3f>> &instances, std::string outputFile) { // TODO: Change input type to vector<Transform>
+    void PBRTExporter::exportInstances(std::vector<Transform> instanceTransforms, std::string outputFile) { 
 
-        // std::ofstream outStream(outputFile); // TODO: Create file beforehand 
+        std::ofstream outStream(outputFile); // TODO: Create file beforehand 
 
-        // for (const auto& instance : instances) { // TODO: Traverse over list of transform matrices 
+        Transform scaler = Scale(0.1f, 0.1f, 0.1f);
+        for (size_t i = 0; i < instanceTransforms.size(); ++i) {
+            outStream << "AttributeBegin\n";
 
-        //     auto transformMatrix = buildConcatTransformMatrix(instance.first, instance.second); 
+            Transform &transform = instanceTransforms[i];
 
-        //     outStream << "AttributeBegin\n";
-        //     outStream << "ConcatTransform [ ";
-        //     for (float v : transformMatrix) {
-        //         outStream << v << " ";
-        //     }
-        //     outStream << "]\n";
-        //     outStream << procedural.getPBRTShapeBlock() << "\n";
-        //     outStream << "AttributeEnd\n\n";
-        // }
+            transform = transform * scaler;
+           
+            auto transformMatrix = transform.GetMatrix();
+
+            outStream << "ConcatTransform [ ";
+            for (int row = 0; row < 4; ++row) {
+                for (int col = 0; col < 4; ++col) {
+                    outStream << transformMatrix[col][row] << " ";  // TODO: Is row-major order correct?
+                }
+            }
+            outStream << "]\n";
+
+            outStream << procedural.constructPbrtShapeBlock() << "\n";
+            outStream << "AttributeEnd\n\n";
+        }
+
         return;
     }
 

@@ -1,0 +1,90 @@
+AttributeBegin
+ConcatTransform [ 0 -0.1 0 0 0.1 0 0 0 0 0 0.1 0 -0.635096 1 -0.999694 1 ]
+Shape "plymesh" "string filename" [ "../src/pbrt/model/cubeTriMesh.ply" ]
+AttributeEnd
+
+AttributeBegin
+ConcatTransform [ 0 -0.1 0 0 0.1 0 0 0 0 0 0.1 0 0.666913 1 -0.318385 1 ]
+Shape "plymesh" "string filename" [ "../src/pbrt/model/cubeTriMesh.ply" ]
+AttributeEnd
+
+AttributeBegin
+ConcatTransform [ 0 -0.1 0 0 0.1 0 0 0 0 0 0.1 0 1 -0.265214 0.330986 1 ]
+Shape "plymesh" "string filename" [ "../src/pbrt/model/cubeTriMesh.ply" ]
+AttributeEnd
+
+AttributeBegin
+ConcatTransform [ 0 -0.1 0 0 0.1 0 0 0 0 0 0.1 0 0.288399 1 -0.497494 1 ]
+Shape "plymesh" "string filename" [ "../src/pbrt/model/cubeTriMesh.ply" ]
+AttributeEnd
+
+AttributeBegin
+ConcatTransform [ 0 -0.1 0 0 0.1 0 0 0 0 0 0.1 0 1 -0.237797 0.215445 1 ]
+Shape "plymesh" "string filename" [ "../src/pbrt/model/cubeTriMesh.ply" ]
+AttributeEnd
+
+AttributeBegin
+ConcatTransform [ 0 -0.1 0 0 0.1 0 0 0 0 0 0.1 0 0.598219 1 -0.0987735 1 ]
+Shape "plymesh" "string filename" [ "../src/pbrt/model/cubeTriMesh.ply" ]
+AttributeEnd
+
+AttributeBegin
+ConcatTransform [ 0 -0.1 0 0 0.1 0 0 0 0 0 0.1 0 1 -0.622147 -0.184779 1 ]
+Shape "plymesh" "string filename" [ "../src/pbrt/model/cubeTriMesh.ply" ]
+AttributeEnd
+
+AttributeBegin
+ConcatTransform [ 0 -0.1 0 0 0.1 0 0 0 0 0 0.1 0 1 0.0118866 0.254918 1 ]
+Shape "plymesh" "string filename" [ "../src/pbrt/model/cubeTriMesh.ply" ]
+AttributeEnd
+
+AttributeBegin
+ConcatTransform [ 0 -0.1 0 0 0.1 0 0 0 0 0 0.1 0 0.0758057 1 0.377843 1 ]
+Shape "plymesh" "string filename" [ "../src/pbrt/model/cubeTriMesh.ply" ]
+AttributeEnd
+
+AttributeBegin
+ConcatTransform [ 0 -0.1 0 0 0.1 0 0 0 0 0 0.1 0 -0.286643 1 0.256224 1 ]
+Shape "plymesh" "string filename" [ "../src/pbrt/model/cubeTriMesh.ply" ]
+AttributeEnd
+
+AttributeBegin
+ConcatTransform [ 0 -0.1 0 0 0.1 0 0 0 0 0 0.1 0 1 -0.0571737 0.0155005 1 ]
+Shape "plymesh" "string filename" [ "../src/pbrt/model/cubeTriMesh.ply" ]
+AttributeEnd
+
+AttributeBegin
+ConcatTransform [ 0 -0.1 0 0 0.1 0 0 0 0 0 0.1 0 1 -0.142267 -0.279048 1 ]
+Shape "plymesh" "string filename" [ "../src/pbrt/model/cubeTriMesh.ply" ]
+AttributeEnd
+
+AttributeBegin
+ConcatTransform [ 0 -0.1 0 0 0.1 0 0 0 0 0 0.1 0 0.693981 1 -0.607159 1 ]
+Shape "plymesh" "string filename" [ "../src/pbrt/model/cubeTriMesh.ply" ]
+AttributeEnd
+
+AttributeBegin
+ConcatTransform [ 0 -0.1 0 0 0.1 0 0 0 0 0 0.1 0 1 -0.00897598 0.935945 1 ]
+Shape "plymesh" "string filename" [ "../src/pbrt/model/cubeTriMesh.ply" ]
+AttributeEnd
+
+AttributeBegin
+ConcatTransform [ 0 -0.1 0 0 0.1 0 0 0 0 0 0.1 0 -0.215255 1 0.217324 1 ]
+Shape "plymesh" "string filename" [ "../src/pbrt/model/cubeTriMesh.ply" ]
+AttributeEnd
+
+AttributeBegin
+ConcatTransform [ 0 -0.1 0 0 0.1 0 0 0 0 0 0.1 0 1 0.241561 0.0992999 1 ]
+Shape "plymesh" "string filename" [ "../src/pbrt/model/cubeTriMesh.ply" ]
+AttributeEnd
+
+AttributeBegin
+ConcatTransform [ 0 -0.1 0 0 0.1 0 0 0 0 0 0.1 0 1 0.27143 -0.133454 1 ]
+Shape "plymesh" "string filename" [ "../src/pbrt/model/cubeTriMesh.ply" ]
+AttributeEnd
+
+AttributeBegin
+ConcatTransform [ 0 -0.1 0 0 0.1 0 0 0 0 0 0.1 0 0.0287898 1 0.356455 1 ]
+Shape "plymesh" "string filename" [ "../src/pbrt/model/cubeTriMesh.ply" ]
+AttributeEnd
+
