@@ -286,7 +286,7 @@ int main(int argc, char *argv[]) {
         ParseFiles(&formattingTarget, filenames);
     } else {
         // load the ply trimesh
-        TriQuadMesh triQuad = TriQuadMesh::ReadPLY("../src/pbrt/model/planeTest.ply");
+        TriQuadMesh triQuad = TriQuadMesh::ReadPLY("../models/test_plane_model/plane.ply");
         triQuad.ConvertToOnlyTriangles();
         triQuad.ComputeNormals();    
 
@@ -299,13 +299,13 @@ int main(int argc, char *argv[]) {
         std::vector<Float> densityMapData;
         int nu, nv;
 
-        std::tie(densityMapData, nu, nv) = sampler.loadDensityMap("../src/pbrt/model/planeDensityMapTest.png");
+        std::tie(densityMapData, nu, nv) = sampler.loadDensityMap("../models/test_plane_model/vegDM.png");
 
         // define the UV domain we want to sample over (i think this is done in sampleUVValues)
         Bounds2f domain(Point2f(0, 0), Point2f(1, 1));
 
         // get nSamples samples from the sampler
-        const int nSamples = 500;
+        const int nSamples = 25;
         std::vector<Point2f> uvSamples = sampler.sampleUVValues({densityMapData, nu, nv}, nSamples);
 
         std::cout << "Got " << uvSamples.size() << " UV samples\n";
@@ -329,13 +329,18 @@ int main(int argc, char *argv[]) {
             }
 
             // TODO: Instance procedural
-            Procedural mesh("../src/pbrt/model/cubeTriMesh.ply");
+            Procedural mesh("../models/test_plane_model/fern_low_poly_modified.ply",
+                            "fern_leaf", 
+                            "diffuse", 
+                            "../models/epic_model/models/textures/fauna/Fern_Plant_Preview_FREE_Model_BASE_COLOR_(Albedo)_MAP.png",
+                            "",
+                            "../models/epic_model/models/textures/fauna/Fern_Plant_Preview_FREE_Model_NORMAL_MAP.png");
 
             // TODO: Instance exporter 
             PBRTExporter exporter(mesh);
 
             // TODO: Call the export method 
-            exporter.exportInstances(sampleXforms, "../src/pbrt/model/instances.pbrt");
+            exporter.exportInstances(sampleXforms, "../models/test_plane_model/instances.pbrt");
         }
 
     // need to parse the 

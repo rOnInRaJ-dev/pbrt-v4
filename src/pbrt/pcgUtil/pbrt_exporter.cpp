@@ -16,7 +16,9 @@ namespace pbrt {
 
         std::ofstream outStream(outputFile); // TODO: Create file beforehand 
 
-        Transform scaler = Scale(0.4f, 0.4f, 0.4f);
+        outStream << procedural.constructPbrtMaterialBlock() << "\n";
+
+        Transform scaler = Scale(0.1f, 0.1f, 0.1f);
         for (size_t i = 0; i < instanceTransforms.size(); ++i) {
             outStream << "AttributeBegin\n";
 

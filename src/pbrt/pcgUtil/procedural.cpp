@@ -39,7 +39,7 @@ namespace pbrt {
                 block += "    \"string filename\" [ \"" + bumpMap + "\" ]\n\n";
             }
             block += "MakeNamedMaterial \"" + namedMaterial + "\"\n";
-            block += "    \"string type\" [\"coateddiffuse\"]\n";
+            block += "    \"string type\" [\"" + materialType + "\"]\n";
             if (!texture.empty()) {
                 block += "    \"texture reflectance\" [\"" + namedMaterial + "_diffuse\"]\n";
             }
