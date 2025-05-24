@@ -2,6 +2,7 @@
 #define PBRT_PROCEDURAL_MESH
 
 #include <string>
+#include <pbrt/util/vecmath.h>
 
 namespace pbrt {
     

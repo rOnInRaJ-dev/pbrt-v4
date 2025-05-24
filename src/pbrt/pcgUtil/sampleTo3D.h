@@ -7,10 +7,16 @@
 
 namespace pbrt {
 
-std::vector<Point3f> findSamplesOnMesh(
+    typedef struct SampleOnMesh {
+        Point3f p;
+        Normal3f n;
+    } SampleOnMesh;
+
+
+std::vector<SampleOnMesh> findSampleOnMesh (
     const TriQuadMesh *mesh,
     const Point2f    &sampleUV
-);
+);    
 
 }  
 #endif  

@@ -286,7 +286,7 @@ int main(int argc, char *argv[]) {
         ParseFiles(&formattingTarget, filenames);
     } else {
         // load the ply trimesh
-        TriQuadMesh triQuad = TriQuadMesh::ReadPLY("../src/pbrt/model/planeTest.ply");
+        TriQuadMesh triQuad = TriQuadMesh::ReadPLY("../src/pbrt/model/kPlaneTest/plane.ply");
         triQuad.ConvertToOnlyTriangles();
         triQuad.ComputeNormals();    
 
@@ -299,13 +299,13 @@ int main(int argc, char *argv[]) {
         std::vector<Float> densityMapData;
         int nu, nv;
 
-        std::tie(densityMapData, nu, nv) = sampler.loadDensityMap("../src/pbrt/model/planeDensityMapTest.png");
+        std::tie(densityMapData, nu, nv) = sampler.loadDensityMap("../src/pbrt/model/kPlaneTest/vegDM.png");
 
         // define the UV domain we want to sample over (i think this is done in sampleUVValues)
         Bounds2f domain(Point2f(0, 0), Point2f(1, 1));
 
         // get nSamples samples from the sampler
-        const int nSamples = 500;
+        const int nSamples = 50;
         std::vector<Point2f> uvSamples = sampler.sampleUVValues({densityMapData, nu, nv}, nSamples);
 
         std::cout << "Got " << uvSamples.size() << " UV samples\n";
@@ -317,19 +317,18 @@ int main(int argc, char *argv[]) {
             // returns a list of hit points + the interpolated normal
 
             Point2f flippedUV = Point2f(uv.x, 1 - uv.y);
-            auto pts = findSamplesOnMesh(&triQuad, flippedUV);
 
-            std::cerr << "  UV " << uv << " -> " << pts.size() << " points\n";
-
-            if (pts.empty()) {continue;} 
+            std::vector<SampleOnMesh> samples = findSampleOnMesh(&triQuad, flippedUV);
+            std::cerr << "  UV " << uv << " -> " << samples.size() << " hits\n";
+            if (samples.empty()) { continue; }
             
-                Vector3f n(0, 0, 1);
-                
-                sampleXforms.push_back(AlignZToNormal(pts[0], n));
-            }
+
+            const SampleOnMesh &s = samples[0];
+                                
+            sampleXforms.push_back(AlignZToNormal(s.p, s.n));
 
             // TODO: Instance procedural
-            Procedural mesh("../src/pbrt/model/cubeTriMesh.ply");
+            Procedural mesh("../src/pbrt/model/kPlaneTest/fernModified.ply");
 
             // TODO: Instance exporter 
             PBRTExporter exporter(mesh);
@@ -337,7 +336,8 @@ int main(int argc, char *argv[]) {
             // TODO: Call the export method 
             exporter.exportInstances(sampleXforms, "../src/pbrt/model/instances.pbrt");
         }
-
+    }
+    
     // need to parse the 
 
     // Parse provided scene description files
