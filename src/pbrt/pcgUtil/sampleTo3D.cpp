@@ -7,7 +7,7 @@
 
 
 namespace pbrt {
-    std::vector<Point3f> FindSamplesOnMesh(
+    std::vector<Point3f> findSamplesOnMesh(
     const TriQuadMesh *mesh,
     const Point2f    &sampleUV
 ) {
@@ -25,7 +25,7 @@ namespace pbrt {
             v2 = idx[3*t + 2];
 
         // UV coords
-        Point2f uv0 = uvs[v0],
+        Point2f uv0 = uvs[v0],        
                 uv1 = uvs[v1],
                 uv2 = uvs[v2];
 
@@ -49,6 +49,7 @@ namespace pbrt {
                 p2 = P[v2];
         results.push_back(a*p0 + b*p1 + g*p2);
     }
+
     return results;
 }
 

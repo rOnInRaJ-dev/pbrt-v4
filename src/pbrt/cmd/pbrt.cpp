@@ -31,6 +31,7 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 
 using namespace pbrt;
@@ -285,31 +286,41 @@ int main(int argc, char *argv[]) {
         ParseFiles(&formattingTarget, filenames);
     } else {
         // load the ply trimesh
-        TriQuadMesh triQuad = TriQuadMesh::ReadPLY("../src/pbrt/model/cubeTriMesh.ply");
+        TriQuadMesh triQuad = TriQuadMesh::ReadPLY("../src/pbrt/model/planeTest.ply");
         triQuad.ConvertToOnlyTriangles();
         triQuad.ComputeNormals();    
+
+        std::cerr << "mesh.uv.size()=" << triQuad.uv.size()
+        << "  triIndices.size()=" << triQuad.triIndices.size() << "\n";
+
 
         pbrt::PCGSampling sampler;
 
         std::vector<Float> densityMapData;
         int nu, nv;
 
-        std::tie(densityMapData, nu, nv) = sampler.loadDensityMap("../src/pbrt/model/DensityMap.png");
+        std::tie(densityMapData, nu, nv) = sampler.loadDensityMap("../src/pbrt/model/planeDensityMapTest.png");
 
         // define the UV domain we want to sample over (i think this is done in sampleUVValues)
         Bounds2f domain(Point2f(0, 0), Point2f(1, 1));
 
         // get nSamples samples from the sampler
-        const int nSamples = 50;
+        const int nSamples = 500;
         std::vector<Point2f> uvSamples = sampler.sampleUVValues({densityMapData, nu, nv}, nSamples);
 
+        std::cout << "Got " << uvSamples.size() << " UV samples\n";
 
         // for each UV, project to 3D + normal, then build a transform
         std::vector<Transform> sampleXforms;
         sampleXforms.reserve(uvSamples.size());
         for (Point2f uv : uvSamples) {
             // returns a list of hit points + the interpolated normal
-            auto pts = FindSamplesOnMesh(&triQuad, uv);
+
+            Point2f flippedUV = Point2f(uv.x, 1 - uv.y);
+            auto pts = findSamplesOnMesh(&triQuad, flippedUV);
+
+            std::cerr << "  UV " << uv << " -> " << pts.size() << " points\n";
+
             if (pts.empty()) {continue;} 
             
                 Vector3f n(0, 0, 1);

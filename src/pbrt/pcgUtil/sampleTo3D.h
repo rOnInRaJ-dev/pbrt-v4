@@ -7,7 +7,7 @@
 
 namespace pbrt {
 
-std::vector<Point3f> FindSamplesOnMesh(
+std::vector<Point3f> findSamplesOnMesh(
     const TriQuadMesh *mesh,
     const Point2f    &sampleUV
 );

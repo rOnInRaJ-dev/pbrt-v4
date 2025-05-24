@@ -9,7 +9,7 @@ PixelFilter "triangle"
     "float xradius" [ 1 ]
     "float yradius" [ 1 ]
 Film "rgb"
-    "string filename" [ "rendered.png" ]
+    "string filename" [ "trunk_rendered_2.png" ]
     "integer yresolution" [ 720 ]
     "integer xresolution" [ 1280 ]
 
@@ -39,13 +39,12 @@ WorldBegin
 #  Materials
 # ==========================
 
-
 # ==========================
 #  Meshes
 # ==========================
 
-# Shape "plymesh"
-#     "string filename" [ "cubeTriMesh.ply" ]
+#Shape "plymesh"
+#    "string filename" [ "planeTest.ply" ]
 
 # Import instances 
 Include "instances.pbrt"
