@@ -7,13 +7,15 @@ namespace pbrt {
                            const std::string &materialType,
                            const std::string &texture,
                            const std::string &bumpMap,
-                           const std::string &normalMap)
+                           const std::string &normalMap,
+                           const std::string &opacityMap)
                         : filepath(filepath),
                         namedMaterial(namedMaterial),
                         materialType(materialType),
                         texture(texture),
                         bumpMap(bumpMap),
-                        normalMap(normalMap) {}
+                        normalMap(normalMap),
+                        opacityMap(opacityMap) {}
 
     std::string Procedural::constructPbrtShapeBlock() {
         std::string block;
@@ -38,8 +40,13 @@ namespace pbrt {
                 block += "Texture \"" + namedMaterial + "_roughness\" \"float\" \"imagemap\"\n";
                 block += "    \"string filename\" [ \"" + bumpMap + "\" ]\n\n";
             }
+            if (!opacityMap.empty()) {
+                block += "Texture \"" + namedMaterial + "_opacity\" \"float\" \"imagemap\"\n";
+                block += "    \"string filename\" [ \"" + opacityMap + "\" ]\n\n";
+            }
+            
             block += "MakeNamedMaterial \"" + namedMaterial + "\"\n";
-            block += "    \"string type\" [\"coateddiffuse\"]\n";
+            block += "    \"string type\" [\"" + materialType + "\"]\n";
             if (!texture.empty()) {
                 block += "    \"texture reflectance\" [\"" + namedMaterial + "_diffuse\"]\n";
             }
@@ -53,5 +60,14 @@ namespace pbrt {
 
         return block;
     }
+
+    std::string Procedural::addOpacityBlock() {
+        std::string block = "";
+        if (!opacityMap.empty()) {
+            block += "\"texture alpha\" [ \"" + namedMaterial + "_opacity\" ]\n";
+        }
+        return block;
+    }
+   
 }
 

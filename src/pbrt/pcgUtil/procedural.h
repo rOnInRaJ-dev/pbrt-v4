@@ -13,10 +13,12 @@ namespace pbrt {
                 const std::string &materialType = "", 
                 const std::string &texture = "",
                 const std::string &bumpMap = "",
-                const std::string &normalMap = "");
+                const std::string &normalMap = "",
+                const std::string &opacityMap = "");
 
         std::string constructPbrtShapeBlock();
         std::string constructPbrtMaterialBlock();
+        std::string addOpacityBlock(); 
 
         private:
         std::string filepath;
@@ -25,6 +27,7 @@ namespace pbrt {
         std::string texture;
         std::string bumpMap;
         std::string normalMap;
+        std::string opacityMap;
     };
 }
 

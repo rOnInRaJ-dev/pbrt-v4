@@ -1,250 +1,250 @@
 AttributeBegin
-ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 21.1036 0.21899 -7.71899 1 ]
+ConcatTransform [ 0.396567 -0.0336037 0.0400707 0 0.0400707 0.392193 -0.06767 0 -0.0336037 0.0711033 0.392193 0 31.8629 -0.105707 -7.55431 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.37698 0.0827274 0.105084 0 -0.105084 0.377634 0.0796861 0 -0.0827274 -0.102707 0.377634 0 5.39002 -0.615767 -18.6592 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 18.6395 0.21899 -12.1259 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.399999 0.000699624 0.000700237 0 -0.000700237 0.399999 0.000350066 0 -0.000699624 -0.00035128 0.399999 0 28.5192 0.21899 2.57641 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 27.539 0.21899 -4.63986 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.399907 0.00608797 0.006137 0 -0.006137 0.39994 0.00316134 0 -0.00608797 -0.00325479 0.39994 0 6.71521 0.218482 -25.979 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 10.2544 0.21899 -31.5126 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 15.0031 0.21899 -24.1948 1 ]
+ConcatTransform [ 0.399856 0.00734414 0.0078438 0 -0.0078438 0.399063 0.0262133 0 -0.00734414 -0.0263577 0.399063 0 -0.426114 -2.28662 -15.0794 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 12.1836 0.21899 -22.831 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 16.3042 0.21899 -21.0442 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 16.5321 0.21899 -21.2251 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 36.8905 0.21899 7.09803 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.399625 0.0121515 0.0123453 0 -0.0123453 0.399762 0.00613715 0 -0.0121515 -0.0065124 0.399762 0 0.413905 -2.28662 -11.2556 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 15.9148 0.21899 -27.7389 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.399411 0.0151542 0.015527 0 -0.015527 0.399588 0.00941582 0 -0.0151542 -0.0100047 0.399588 0 8.80479 0.213942 -20.2654 1 ]
+ConcatTransform [ 0.4 -9.69776e-07 9.69779e-07 0 9.69779e-07 0.4 -9.52295e-07 0 -9.69776e-07 9.3619e-07 0.4 0 38.7515 0.21899 3.16674 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 13.0153 0.21899 -28.5203 1 ]
+ConcatTransform [ 0.4 -0.000237479 0.000237749 0 0.000237749 0.4 -0.000454887 0 -0.000237479 0.000455028 0.4 0 35.1454 0.21899 0.238366 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.399523 -0.0136625 -0.0139429 0 0.0139429 0.399679 0.00788422 0 0.0136625 -0.00836081 0.399679 0 26.5574 0.216236 -19.2439 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 9.95782 0.21899 -24.4081 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.399989 0.00206166 0.00206779 0 -0.00206779 0.399993 0.00118185 0 -0.00206166 -0.00119249 0.399993 0 5.15543 0.21899 -29.4524 1 ]
+ConcatTransform [ 0.399391 0.0147646 0.0164033 0 -0.0164033 0.397492 0.041609 0 -0.0147646 -0.0422182 0.397492 0 -0.225915 -2.09504 -16.6062 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 20.855 0.21899 -21.0658 1 ]
+ConcatTransform [ 0.399996 0.00124829 0.0012505 0 -0.0012505 0.399997 0.000705958 0 -0.00124829 -0.000709885 0.399997 0 16.0211 0.21899 -12.3633 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.399572 -0.0126273 0.0135198 0 0.0135198 0.398855 -0.0270481 0 -0.0126273 0.0274761 0.398855 0 33.0126 0.188481 -4.68951 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 11.2086 0.21899 -30.4845 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.399978 0.00298177 0.00299303 0 -0.00299303 0.399986 0.00149624 0 -0.00298177 -0.00151855 0.399986 0 27.5709 0.21899 3.17672 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 9.41606 0.21899 -24.4377 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.374542 0.0920685 0.106025 0 -0.106025 0.383445 0.0415724 0 -0.0920685 -0.06703 0.383445 0 3.71089 -0.324084 -22.0387 1 ]
+ConcatTransform [ 0.372779 0.0920932 0.112048 0 -0.112048 0.379076 0.0612124 0 -0.0920932 -0.0884334 0.379076 0 6.965 -0.429296 -16.0854 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 -0.000149638 0.000149655 0 0.000149655 0.4 -4.50382e-05 0 -0.000149638 4.50913e-05 0.4 0 24.6404 0.21899 -8.44467 1 ]
+ConcatTransform [ 0.399997 -0.00102045 0.0010255 0 0.0010255 0.399994 -0.00197495 0 -0.00102045 0.00197752 0.399994 0 36.1722 0.21899 -0.646502 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 16.1205 0.21899 -16.355 1 ]
+ConcatTransform [ 0.4 -1.9586e-05 1.95869e-05 0 1.95869e-05 0.4 -1.95695e-05 0 -1.9586e-05 1.95805e-05 0.4 0 23.5136 0.21899 -7.20532 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 0 0 0 0 0.399221 0.024947 0 0 -0.024947 0.399221 0 -2.808 -2.28662 -14.998 1 ]
+ConcatTransform [ 0.396305 0.0368226 0.0398293 0 -0.0398293 0.396929 0.0293398 0 -0.0368226 -0.0330347 0.396929 0 7.21641 0.136407 -20.6912 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.399914 0.0058462 0.00589398 0 -0.00589398 0.399944 0.00321262 0 -0.0058462 -0.00329878 0.399944 0 6.58038 0.21824 -26.788 1 ]
+ConcatTransform [ 0.399691 0.0109623 0.0112804 0 -0.0112804 0.399682 0.0112804 0 -0.0109623 -0.0115898 0.399682 0 22.18 0.207914 -3.53083 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.398414 0.0247865 0.0255393 0 -0.0255393 0.399028 0.011147 0 -0.0247865 -0.0127334 0.399028 0 6.6428 0.192519 -22.8648 1 ]
+ConcatTransform [ 0.39968 0.010944 0.0116505 0 -0.0116505 0.399059 0.0248214 0 -0.010944 -0.0251409 0.399059 0 -3.67328 -2.07553 -16.7326 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.365511 0.10928 0.120248 0 -0.120248 0.381012 0.0192529 0 -0.10928 -0.0537417 0.381012 0 1.47528 -1.09264 -21.4106 1 ]
+ConcatTransform [ 0.38898 0.0613282 0.0702401 0 -0.0702401 0.390886 0.0476881 0 -0.0613282 -0.0587084 0.390886 0 7.34283 -0.0211376 -19.1435 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 22.6467 0.21899 -17.2091 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 34.8439 0.21899 3.86036 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.399115 0.0186949 0.0189076 0 -0.0189076 0.399532 0.00407863 0 -0.0186949 -0.00496337 0.399532 0 0.289902 -2.28662 -13.646 1 ]
+ConcatTransform [ 0.392373 0.0485134 0.0607437 0 -0.0607437 0.38638 0.0837875 0 -0.0485134 -0.0914145 0.38638 0 1.75954 -1.77087 -17.6675 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.38535 0.0724871 -0.0790632 0 -0.0790632 0.391199 -0.0266888 0 0.0724871 0.0413388 0.391199 0 -1.15648 -2.00408 -21.2456 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 19.4982 0.21899 -20.1757 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 34.161 0.21899 1.69567 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 17.8993 0.21899 -12.6747 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 10.8486 0.21899 -28.6854 1 ]
+ConcatTransform [ 0.39904 -0.0195535 -0.0196113 0 0.0196113 0.399518 0.000699679 0 0.0195535 -0.00165951 0.399518 0 25.3837 0.198288 -15.1227 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.399998 0.000867252 0.00086914 0 -0.00086914 0.399998 0.000869158 0 -0.000867252 -0.000871032 0.399998 0 22.7767 0.21899 -5.05466 1 ]
+ConcatTransform [ 0.4 -6.01126e-05 6.01307e-05 0 6.01307e-05 0.4 -0.000120244 0 -6.01126e-05 0.000120241 0.4 0 30.0654 0.21899 -3.32528 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.399813 -0.00852036 0.00876328 0 0.00876328 0.399749 -0.0111457 0 -0.00852036 0.0113324 0.399749 0 37.764 0.211225 -1.7313 1 ]
+ConcatTransform [ 0.387227 0.0642282 0.0770052 0 -0.0770052 0.387223 0.0642539 0 -0.0642282 -0.0770266 0.387223 0 1.21361 -1.24984 -19.7959 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 -3.12191e-05 3.12215e-05 0 3.12215e-05 0.4 -3.1204e-05 0 -3.12191e-05 3.12153e-05 0.4 0 35.3408 0.21899 1.41104 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 35.4742 0.21899 7.75192 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.399998 0.000889212 0.000977626 0 -0.000977626 0.398209 0.0378023 0 -0.000889212 -0.0378044 0.398209 0 -2.63168 -1.99037 -17.2842 1 ]
+ConcatTransform [ 0.399986 0.00235496 0.00236216 0 -0.00236216 0.399991 0.00121355 0 -0.00235496 -0.00122744 0.399991 0 16.8708 0.218911 -10.658 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.380705 0.0823343 0.0910225 0 -0.0910225 0.388396 0.029381 0 -0.0823343 -0.0486764 0.388396 0 3.21435 -1.91488 -14.671 1 ]
+ConcatTransform [ 0.399993 -0.00165875 0.00166189 0 0.00166189 0.399996 -0.000751865 0 -0.00165875 0.000758726 0.399996 0 23.8371 0.21899 -11.4876 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 15.5364 0.21899 -23.8396 1 ]
+ConcatTransform [ 0.399934 0.00513464 0.00518019 0 -0.00518019 0.399951 0.00349921 0 -0.00513464 -0.00356569 0.399951 0 17.274 0.218825 -8.96416 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.399952 0.00437735 0.00439975 0 -0.00439975 0.399971 0.00201802 0 -0.00437735 -0.00206618 0.399971 0 7.05517 0.21899 -25.2138 1 ]
+ConcatTransform [ 0.399999 -0.000662945 0.000665154 0 0.000665154 0.399997 -0.00133042 0 -0.000662945 0.0013315 0.399997 0 33.9237 0.21899 -2.15277 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 10.6772 0.21899 -22.6341 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 34.7897 0.21899 8.02377 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 36.6238 0.21899 3.17833 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 21.4858 0.21899 -13.8659 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.390914 0.0562867 0.0633867 0 -0.0633867 0.392683 0.042216 0 -0.0562867 -0.0513017 0.392683 0 -0.285902 -1.70341 -18.9589 1 ]
+ConcatTransform [ 0.36321 0.112483 0.124202 0 -0.124202 0.379739 0.0192998 0 -0.112483 -0.0560899 0.379739 0 0.526552 -1.4542 -22.7903 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.38429 0.0699561 0.0861841 0 -0.0861842 0.383763 0.0727869 0 -0.0699561 -0.0884974 0.383763 0 8.6582 -0.278185 -14.8008 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 18.414 0.21899 -16.5496 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 0.000122892 0.000122911 0 -0.000122911 0.4 6.14727e-05 0 -0.000122892 -6.15295e-05 0.4 0 7.96143 0.21899 -26.4056 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 36.0313 0.21899 8.32891 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 22.5901 0.21899 -10.0664 1 ]
+ConcatTransform [ 0.383455 0.0732242 0.0871821 0 -0.0871821 0.38584 0.0593884 0 -0.0732242 -0.0759337 0.38584 0 6.62522 -0.218455 -18.9359 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 30.094 0.21899 1.17763 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 32.1806 0.21899 4.77396 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.370133 0.0998167 0.114184 0 -0.114184 0.381611 0.0365381 0 -0.0998167 -0.0664047 0.381611 0 1.97178 -0.987249 -21.0023 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 9.89379 0.21899 -32.1433 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 23.4394 0.21899 -5.54432 1 ]
+ConcatTransform [ 0.399631 0.0119741 0.012332 0 -0.012332 0.399642 0.0115873 0 -0.0119741 -0.0119569 0.399642 0 12.1583 0.207078 -15.4889 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.361458 0.110657 0.130779 0 -0.130779 0.375477 0.0437514 0 -0.110657 -0.0822933 0.375477 0 1.39733 -1.02469 -24.316 1 ]
+ConcatTransform [ 0.394019 0.0466459 0.0507267 0 -0.0507267 0.395617 0.0302275 0 -0.0466459 -0.0362085 0.395617 0 8.48929 0.117391 -18.4074 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 9.96153 0.21899 -25.7008 1 ]
+ConcatTransform [ 0.398897 0.020587 0.0213942 0 -0.0213942 0.399153 0.0148036 0 -0.020587 -0.015907 0.399153 0 1.58744 -2.22905 -11.2332 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.397105 0.0327662 0.0351324 0 -0.0351324 0.397585 0.0262976 0 -0.0327662 -0.029193 0.397585 0 13.7048 0.151231 -12.2689 1 ]
+ConcatTransform [ 0.399972 -0.0033355 -0.00334354 0 0.00334354 0.399985 0.000948958 0 0.0033355 -0.000976842 0.399985 0 24.2807 0.21899 -16.9535 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.385021 0.0664601 0.0856848 0 -0.0856848 0.380174 0.0901449 0 -0.0664601 -0.105124 0.380174 0 2.90755 -1.34629 -18.5246 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 16.5369 0.21899 -21.4876 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.390381 0.0571238 0.0658741 0 -0.0658741 0.391211 0.0511366 0 -0.0571238 -0.0607554 0.391211 0 0.0784247 -1.48637 -19.3521 1 ]
+ConcatTransform [ 0.375933 0.0855694 0.106547 0 -0.106547 0.378824 0.0716939 0 -0.0855694 -0.0957609 0.378824 0 3.42989 -0.629833 -20.4505 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.390192 0.0602011 0.0642335 0 -0.0642335 0.394267 0.0206764 0 -0.0602011 -0.0304843 0.394267 0 4.71036 0.0679979 -24.7978 1 ]
+ConcatTransform [ 0.374143 0.0949439 0.104892 0 -0.104892 0.385158 0.0255147 0 -0.0949439 -0.0513713 0.385158 0 3.61468 -0.258631 -23.8432 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
 AttributeBegin
-ConcatTransform [ 0.398357 0.0243401 0.0268237 0 -0.0268237 0.397302 0.0378411 0 -0.0243401 -0.0394844 0.397302 0 0.638999 -2.20229 -15.9115 1 ]
+ConcatTransform [ 0.4 0 0 0 0 0.4 1.74846e-08 0 0 -1.74846e-08 0.4 0 20.3053 0.21899 -19.4902 1 ]
 Shape "plymesh" "string filename" [ "../src/pbrt/model/kPlaneTest/fernModified.ply" ]
 AttributeEnd
 
