@@ -555,6 +555,11 @@ set (PBRT_SOURCE
   src/pbrt/textures.cpp
 
   src/pbrt/cmd/pspec_gpu.cpp
+
+  src/pbrt/pcgUtil/pbrt_exporter.cpp
+  src/pbrt/pcgUtil/pcg_sampling.cpp
+  src/pbrt/pcgUtil/procedural.cpp
+  src/pbrt/pcgUtil/sampleTo3D.cpp
   )
   
 if (MSVC)
