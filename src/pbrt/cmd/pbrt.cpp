@@ -285,6 +285,20 @@ int main(int argc, char *argv[]) {
         FormattingParserTarget formattingTarget(toPly, options.upgrade);
         ParseFiles(&formattingTarget, filenames);
     } else {
+
+        // parameters:
+        // 1. mesh filename
+        // 2. custom density map
+        // 3. nSamples
+        // 4. Mesh stuff
+        //   - filename
+        //   - namedMaterial
+        //   - materialType
+        //   - texture
+        //   - bumpMap
+        //   - normalMap
+        //   - opacityMap
+
         // load the ply trimesh
         TriQuadMesh triQuad = TriQuadMesh::ReadPLY("../models/epic_model/models/floor_new.ply");
         triQuad.ConvertToOnlyTriangles();

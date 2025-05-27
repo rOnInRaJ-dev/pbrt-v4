@@ -482,12 +482,16 @@ STAT_MEMORY_COUNTER("Memory/Film pixels", filmPixelMemory);
 
 // RGBFilm Method Definitions
 RGBFilm::RGBFilm(FilmBaseParameters p, const RGBColorSpace *colorSpace,
-                 Float maxComponentValue, bool writeFP16, Allocator alloc)
+                 Float maxComponentValue, bool writeFP16, Allocator alloc,
+                 bool useBilateralFilter, Float sigmaSpatial, Float sigmaRange)
     : FilmBase(p),
       pixels(p.pixelBounds, alloc),
       colorSpace(colorSpace),
       maxComponentValue(maxComponentValue),
-      writeFP16(writeFP16) {
+      writeFP16(writeFP16),
+      applyBilateral(useBilateralFilter), // bilateral filter field init
+      bilateralSigmaSpatial(sigmaSpatial),
+      bilateralSigmaRange(sigmaRange){
     filterIntegral = filter.Integral();
     CHECK(!pixelBounds.IsEmpty());
     CHECK(colorSpace);
@@ -526,9 +530,92 @@ PBRT_CPU_GPU void RGBFilm::AddSplat(Point2f p, SampledSpectrum L, const SampledW
 
 void RGBFilm::WriteImage(ImageMetadata metadata, Float splatScale) {
     Image image = GetImage(&metadata, splatScale);
+
+    // Applying Bilateral Filter here
+    if(applyBilateral) {
+        ApplyBilateralFilter(image, bilateralSigmaSpatial, bilateralSigmaRange);
+    }
+
     LOG_VERBOSE("Writing image %s with bounds %s", filename, pixelBounds);
     image.Write(filename, metadata);
 }
+
+// Apply a bilateral Filter to the image
+void RGBFilm::ApplyBilateralFilter(Image &image, Float sigmaSpatial, Float sigmaRange) {
+    LOG_VERBOSE("Applying bilateral filter to image");
+
+    Point2i res = image.Resolution();
+    std::vector<std::array<Float, 3>> filteredImage(res.x * res.y);
+
+
+    // Helper Function1: Get the pixel value at (x,y)
+    auto get = [&](int x, int y) {
+        return image.GetChannels(Point2i(x,y));
+    };
+
+    // Helper Functoin2: Get the distance between two pixels squared
+    auto dist2 = [&](int x, int y, int x2, int y2) {
+        return (x - x2) * (x - x2) + (y - y2) * (y - y2);
+    };
+
+
+    // get the radius of the affected area of pixels
+    int kernelRadius = std::ceil(sigmaSpatial * 2);
+
+
+    // run the filter in parallel threads, breaking up the image into tiles
+    // each thread will process a tile of the image
+    ParallelFor2D(Bounds2i{{0,0}, res},[&](Bounds2i tile) {
+
+        // loop through pixels in a tile
+        for (int y = tile.pMin.y; y < tile.pMax.y; ++y) {
+            for (int x = tile.pMin.x; x < tile.pMax.x; ++x) {
+
+                auto center = get(x, y); // pixel value at (x,y)
+                std::array<Float, 3> sum = {0, 0, 0}; // sum of pixelvalues
+                Float weightSum = 0; // sum of weights
+
+                // looping over each kernel neighborhood pixels
+                for (int dy = -kernelRadius; dy <= kernelRadius; ++dy) {
+                    for (int dx = -kernelRadius; dx <= kernelRadius; ++dx) {
+                        int nx = Clamp(x + dx, 0, res.x - 1); // clamp x to image bounds
+                        int ny = Clamp(y + dy, 0, res.y - 1); // clamp y to image bounds
+                        auto neighbor = get(nx,ny);
+
+                        // compute the spatial and range weights
+
+                        // spatial weight: nearer pixels have more weight
+                        float spatialW = std::exp(-dist2(x, y, nx, ny) / (2 * sigmaSpatial * sigmaSpatial));
+
+                        // range weight: similar color pixels have more weight
+                        float rangeW = std::exp(
+                            -(Sqr(neighbor[0] - center[0]) +
+                              Sqr(neighbor[1] - center[1]) +
+                              Sqr(neighbor[2] - center[2])) / (2 * sigmaRange * sigmaRange));
+
+                        float w = spatialW * rangeW;
+                        // float w = spatialW;
+                        for (int c = 0; c < 3; ++c)
+                            sum[c] += neighbor[c] * w;
+
+                        weightSum += w;
+                    }
+                }
+
+                for (int c = 0; c < 3; ++c)
+                    sum[c] /= weightSum;
+
+                filteredImage[y * res.x + x] = sum;
+            }
+        }
+    });
+
+    // write the filtered image back to the original image
+    for(int y = 0; y < res.y; ++y)
+        for(int x = 0; x < res.x; ++x)
+            image.SetChannels(Point2i(x,y), filteredImage[y * res.x + x]);
+}
+
 
 Image RGBFilm::GetImage(ImageMetadata *metadata, Float splatScale) {
     // Convert image to RGB and compute final pixel values
@@ -573,6 +660,13 @@ std::string RGBFilm::ToString() const {
 RGBFilm *RGBFilm::Create(const ParameterDictionary &parameters, Float exposureTime,
                          Filter filter, const RGBColorSpace *colorSpace,
                          const FileLoc *loc, Allocator alloc) {
+
+    // Bilateral Filter Parameters
+    bool useBilateralFilter = parameters.GetOneBool("bilateral", false); // Bilateral filter call on bilateral scene parameters
+    Float sigma_spatial = parameters.GetOneFloat("bilateral_sigma_spatial", 2.0);
+    Float sigma_range = parameters.GetOneFloat("bilateral_sigma_range", 0.1);
+
+
     Float maxComponentValue = parameters.GetOneFloat("maxcomponentvalue", Infinity);
     bool writeFP16 = parameters.GetOneBool("savefp16", true);
 
@@ -581,7 +675,7 @@ RGBFilm *RGBFilm::Create(const ParameterDictionary &parameters, Float exposureTi
     FilmBaseParameters filmBaseParameters(parameters, filter, sensor, loc);
 
     return alloc.new_object<RGBFilm>(filmBaseParameters, colorSpace, maxComponentValue,
-                                     writeFP16, alloc);
+                                     writeFP16, alloc, useBilateralFilter, sigma_spatial, sigma_range);
 }
 
 // GBufferFilm Method Definitions

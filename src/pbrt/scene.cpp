@@ -394,6 +394,40 @@ void BasicSceneBuilder::ObjectInstance(const std::string &origName, FileLoc loc)
     instanceUses.push_back(InstanceSceneEntity(name, loc, renderFromInstance));
 }
 
+
+    // parameters:
+    // 1. mesh filename
+    // 2. custom density map
+    // 3. nSamples
+    // 4. Mesh stuff
+    //   - filename
+    //   - namedMaterial
+    //   - materialType
+    //   - texture
+    //   - bumpMap
+    //   - normalMap
+    //   - opacityMap
+
+void BasicSceneBuilder::ProceduralMesh(const std::string &name, ParsedParameterVector params, FileLoc loc) {
+    printf("i have successfullly called proceduralMesh from basicsceneBuilder with the name: %s\n", name.c_str());
+
+    // get the mesh filename
+    std::string meshFilename;
+    for (ParsedParameter *p : params) {
+        if (p->name == "filename") {
+            if (p->strings.size() != 1) {
+                ErrorExitDeferred(&loc, "%s: expected single string for filename", p->name);
+                return;
+            }
+            meshFilename = p->strings[0];
+        }
+    }
+
+    // debug mesh filename
+    printf("loading meshfilename: %s\n", meshFilename.c_str());
+}
+
+
 void BasicSceneBuilder::EndOfFiles() {
     if (currentBlock != BlockState::WorldBlock)
         ErrorExitDeferred("End of files before \"WorldBegin\".");
