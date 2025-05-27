@@ -29,6 +29,8 @@
 #include <pbrt/pcgUtil/procedural.h>
 #include <pbrt/pcgUtil/sampleTo3D.h>
 
+#include <pbrt/godrayUtil/godrayGenerator.h>
+
 #include <string>
 #include <vector>
 #include <iostream>
@@ -284,7 +286,18 @@ int main(int argc, char *argv[]) {
     if (format || toPly || options.upgrade) {
         FormattingParserTarget formattingTarget(toPly, options.upgrade);
         ParseFiles(&formattingTarget, filenames);
-    } else {
+    } 
+        
+        Vector3f start(-43, 36, 18);
+        Vector3f end(0, 0, 0);
+
+        initGodrayFile("../models/epic_model/godrayGenerated.pbrt");
+
+        generateGodray(start, end, 6);
+        
+        finishGodrayFile();
+
+        /*
         // load the ply trimesh
         TriQuadMesh triQuad = TriQuadMesh::ReadPLY("../models/epic_model/models/floor_new.ply");
         triQuad.ConvertToOnlyTriangles();
@@ -350,7 +363,7 @@ int main(int argc, char *argv[]) {
             // TODO: Call the export method 
             exporter.exportInstances(sampleXforms, "../models/epic_model/models/vegetation/instances.pbrt");
         }
-    }
+            */
     
     // need to parse the 
 
