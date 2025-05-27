@@ -29,6 +29,18 @@
 #include <iostream>
 #include <mutex>
 
+#include <pbrt/util/transform.h>
+
+#include <pbrt/pcgUtil/pbrt_exporter.h>
+#include <pbrt/pcgUtil/pcg_sampling.h>
+#include <pbrt/pcgUtil/procedural.h>
+#include <pbrt/pcgUtil/sampleTo3D.h>
+
+#include <string>
+#include <vector>
+#include <iostream>
+
+
 namespace pbrt {
 
 InternCache<std::string> SceneEntity::internedStrings(Allocator{});
@@ -362,6 +374,7 @@ void BasicSceneBuilder::ObjectEnd(FileLoc loc) {
     activeInstanceDefinition = nullptr;
 }
 
+
 void BasicSceneBuilder::ObjectInstance(const std::string &origName, FileLoc loc) {
     std::string name = NormalizeUTF8(origName);
     VERIFY_WORLD("ObjectInstance");
@@ -395,6 +408,121 @@ void BasicSceneBuilder::ObjectInstance(const std::string &origName, FileLoc loc)
 }
 
 
+    // makePCG(targetMeshFilename,
+    //         densityMapFilename,
+    //         nSamples,
+    //         meshFilename,
+    //         namedMaterial,
+    //         materialType,
+    //         textureName,
+    //         bumpMapName,
+    //         normalMapName,
+    //         opacityMapName,
+    //         outputFilePath);
+
+    // parametersj
+void makePCG(const std::string &targetMeshFilename,
+                const std::string &densityMapFilename,
+                 const int &nSamples_,
+                 const std::string &meshFilename,
+                 const std::string &namedMaterial,
+                 const std::string &materialType,
+                 const std::string &textureName,
+                 const std::string &bumpMapName,
+                 const std::string &NormalMapName,
+                 const std::string &opacitymapName,
+                 const std::string &outputFilePath) {
+// void makePCG(){
+           TriQuadMesh triQuad = TriQuadMesh::ReadPLY(targetMeshFilename);
+           // TriQuadMesh triQuad = TriQuadMesh::ReadPLY("../models/epic_model/models/floor_new.ply");
+        triQuad.ConvertToOnlyTriangles();
+        triQuad.ComputeNormals();
+
+        // std::cerr << "mesh.uv.size()=" << triQuad.uv.size()
+        // << "  triIndices.size()=" << triQuad.triIndices.size() << "\n";
+
+
+        pbrt::PCGSampling sampler;
+
+        std::vector<Float> densityMapData;
+        int nu, nv;
+
+        std::tie(densityMapData, nu, nv) = sampler.loadDensityMap(densityMapFilename);
+        // std::tie(densityMapData, nu, nv) = sampler.loadDensityMap("../models/epic_model/models/vegetation/vegDM.png");
+
+        // define the UV domain we want to sample over (i think this is done in sampleUVValues)
+        Bounds2f domain(Point2f(0, 0), Point2f(1, 1));
+
+        // get nSamples samples from the sampler
+        const int nSamples = nSamples_;
+    printf("int nsamples input: %d\n", nSamples);
+        // const int nSamples = 30;
+        std::vector<Point2f> uvSamples = sampler.sampleUVValues({densityMapData, nu, nv}, nSamples);
+
+        // std::cout << "Got " << uvSamples.size() << " UV samples\n";
+
+        // for each UV, project to 3D + normal, then build a transform
+        std::vector<Transform> sampleXforms;
+        sampleXforms.reserve(uvSamples.size());
+        for (Point2f uv : uvSamples) {
+            // returns a list of hit points + the interpolated normal
+
+            Point2f flippedUV = Point2f(uv.x, 1 - uv.y);
+
+            std::vector<SampleOnMesh> samples = findSampleOnMesh(&triQuad, flippedUV);
+            // std::cerr << "  UV " << uv << " -> " << samples.size() << " hits\n";
+            if (samples.empty()) { continue; }
+
+
+            const SampleOnMesh &s = samples[0];
+
+            sampleXforms.push_back(AlignZToNormal(s.p, s.n));
+
+            //TODO: Instance procedural
+            // Procedural mesh("../models/epic_model/models/vegetation/leaf.ply",
+            //                 "vegetation",
+            //                 "coateddiffuse",
+            //                 "../models/epic_model/models/textures/fauna/Bush_2.png",
+            //                 "../models/epic_model/models/textures/fauna/Bush_2_Bump.png",
+            //                 "",
+            //                 "../models/epic_model/models/textures/fauna/Bush_2_Opacity.png");
+//             const std::string &meshFilename,
+//             const std::string &namedMaterial,
+//             const std::string &materialType,
+//             const std::string &textureName,
+//             const std::string &bumpMapName,
+//             const std::string &NormalMapName,
+//             const std::string &opacitymapName,
+//             const std::string &outputFilePath) {
+
+
+            // Procedural mesh("../models/epic_model/models/vegetation/test_veg.ply",
+            //                     "vegetation",
+            //                     "coateddiffuse",
+            //                     "../models/epic_model/models/textures/fauna/FULLA-ARBRE2.png",
+            //                     "",
+            //                     "",
+            //                     "../models/epic_model/models/textures/fauna/fullalfa.png");
+
+            Procedural mesh(meshFilename,
+                                namedMaterial,
+                                materialType,
+                                textureName,
+                                bumpMapName,
+                                NormalMapName,
+                                opacitymapName);
+
+            // TODO: Instance exporter
+            PBRTExporter exporter(mesh);
+
+            // TODO: Call the export method
+            // exporter.exportInstances(sampleXforms, "../models/epic_model/models/vegetation/instances.pbrt");
+            exporter.exportInstances(sampleXforms, outputFilePath);
+        }
+
+}
+
+
     // parameters:
     // 1. mesh filename
     // 2. custom density map
@@ -407,25 +535,267 @@ void BasicSceneBuilder::ObjectInstance(const std::string &origName, FileLoc loc)
     //   - bumpMap
     //   - normalMap
     //   - opacityMap
+    // 5. outputFilePath
 
 void BasicSceneBuilder::ProceduralMesh(const std::string &name, ParsedParameterVector params, FileLoc loc) {
     printf("i have successfullly called proceduralMesh from basicsceneBuilder with the name: %s\n", name.c_str());
 
     // get the mesh filename
-    std::string meshFilename;
+    std::string targetMeshFilename;
     for (ParsedParameter *p : params) {
         if (p->name == "filename") {
             if (p->strings.size() != 1) {
                 ErrorExitDeferred(&loc, "%s: expected single string for filename", p->name);
                 return;
             }
+            targetMeshFilename = p->strings[0];
+        }
+    }
+
+    // densitymap
+    std::string densityMapFilename;
+    for (ParsedParameter *p : params) {
+        if (p->name == "densitymap") {
+            if (p->strings.size() != 1) {
+                ErrorExitDeferred(&loc, "%s: expected single string for densitymap", p->name);
+                return;
+            }
+            densityMapFilename = p->strings[0];
+        }
+    }
+
+    // nSamples
+    int nSamples = 0;
+    for (ParsedParameter *p : params) {
+        if (p->name == "nSamples") {
+            if (p->ints.size() != 1) {
+                ErrorExitDeferred(&loc, "%s: expected single integer for nsamples", p->name);
+                return;
+            }
+            nSamples = p->ints[0];
+        }
+    }
+
+    // Mesh stuff
+    // - filename
+    std::string meshFilename;
+    for (ParsedParameter *p : params) {
+        if (p->name == "meshFilename") {
+            if (p->strings.size() != 1) {
+                ErrorExitDeferred(&loc, "%s: expected single string for meshstufffilename", p->name);
+                return;
+            }
             meshFilename = p->strings[0];
         }
     }
 
+    // - namedMaterial
+    std::string namedMaterial;
+    for (ParsedParameter *p : params) {
+        if (p->name == "namedMaterial") {
+            if (p->strings.size() != 1) {
+                ErrorExitDeferred(&loc, "%s: expected single string for namedmaterial", p->name);
+                return;
+            }
+            namedMaterial = p->strings[0];
+        }
+    }
+
+    // - materialType
+    std::string materialType;
+    for (ParsedParameter *p : params) {
+        if (p->name == "materialType") {
+            if (p->strings.size() != 1) {
+                ErrorExitDeferred(&loc, "%s: expected single string for materialtype", p->name);
+                return;
+            }
+            materialType = p->strings[0];
+        }
+    }
+
+    // - texture
+    std::string textureName;
+    for (ParsedParameter *p : params) {
+        if (p->name == "texture") {
+            if (p->strings.size() != 1) {
+                ErrorExitDeferred(&loc, "%s: expected single string for texture", p->name);
+                return;
+            }
+            textureName = p->strings[0];
+        }
+    }
+
+    // - bumpMap
+    std::string bumpMapName;
+    for (ParsedParameter *p : params) {
+        if (p->name == "bumpMap") {
+            if (p->strings.size() != 1) {
+                ErrorExitDeferred(&loc, "%s: expected single string for bumpmap", p->name);
+                return;
+            }
+            bumpMapName = p->strings[0];
+        }
+    }
+
+    // - normalMap
+    std::string normalMapName;
+    for (ParsedParameter *p : params) {
+        if (p->name == "normalMap") {
+            if (p->strings.size() != 1) {
+                ErrorExitDeferred(&loc, "%s: expected single string for normalmap", p->name);
+                return;
+            }
+            normalMapName = p->strings[0];
+        }
+    }
+
+    // - opacityMap
+    std::string opacityMapName;
+    for (ParsedParameter *p : params) {
+        if (p->name == "opacityMap") {
+            if (p->strings.size() != 1) {
+                ErrorExitDeferred(&loc, "%s: expected single string for opacitymap", p->name);
+                return;
+            }
+            opacityMapName = p->strings[0];
+        }
+    }
+
+    // output file path
+    std::string outputFilePath;
+    for (ParsedParameter *p : params) {
+        if (p->name == "outputFilePath") {
+            if (p->strings.size() != 1) {
+                ErrorExitDeferred(&loc, "%s: expected single string for outputFilePath", p->name);
+                return;
+            }
+            outputFilePath = p->strings[0];
+        }
+    }
+
+
+
     // debug mesh filename
-    printf("loading meshfilename: %s\n", meshFilename.c_str());
+    printf("loading meshfilename: %s\n", targetMeshFilename.c_str());
+    // debug everything
+    printf("densityMapFilename: %s\n", densityMapFilename.c_str());
+    printf("nSamples: %d\n", nSamples);
+    printf("meshStuffFilename: %s\n", meshFilename.c_str());
+    printf("namedMaterial: %s\n", namedMaterial.c_str());
+    printf("materialType: %s\n", materialType.c_str());
+    printf("textureName: %s\n", textureName.c_str());
+    printf("bumpMapName: %s\n", bumpMapName.c_str());
+    printf("normalMapName: %s\n", normalMapName.c_str());
+    printf("opacityMapName: %s\n", opacityMapName.c_str());
+    printf("outputFilePath: %s\n", outputFilePath.c_str());
+
+    // // load the ply trimesh
+    // TriQuadMesh triQuad = TriQuadMesh::ReadPLY(targetMeshFilename);
+    // triQuad.ConvertToOnlyTriangles();
+    // triQuad.ComputeNormals();
+    //
+    // printf("Loaded TriquadMesh");
+    //
+    // // std::cerr << "mesh.uv.size()=" << triQuad.uv.size()
+    // // << "  triIndices.size()=" << triQuad.triIndices.size() << "\n";
+    //
+    //
+    // pbrt::PCGSampling sampler;
+    //
+    // std::vector<Float> densityMapData;
+    // int nu, nv;
+    //
+    // std::tie(densityMapData, nu, nv) = sampler.loadDensityMap(densityMapFilename);
+    //
+    // printf("desnityMapdata loaded with sampler.loadDensityMap\n");
+    //
+    // // define the UV domain we want to sample over (i think this is done in sampleUVValues)
+    // Bounds2f domain(Point2f(0, 0), Point2f(1, 1));
+    //
+    // // get nSamples samples from the sampler
+    // // const int nSamples = 30;
+    // std::vector<Point2f> uvSamples = sampler.sampleUVValues({densityMapData, nu, nv}, nSamples);
+    // printf("Sampled UV values\n");
+    //
+    // // std::cout << "Got " << uvSamples.size() << " UV samples\n";
+    //
+    // // for each UV, project to 3D + normal, then build a transform
+    // std::vector<class Transform> sampleXforms;
+    // sampleXforms.reserve(uvSamples.size());
+    // for (Point2f uv : uvSamples) {
+    //     // returns a list of hit points + the interpolated normal
+    //
+    //     Point2f flippedUV = Point2f(uv.x, 1 - uv.y);
+    //
+    //     std::vector<SampleOnMesh> samples = findSampleOnMesh(&triQuad, flippedUV);
+    //     // std::cerr << "  UV " << uv << " -> " << samples.size() << " hits\n";
+    //     if (samples.empty()) { continue; }
+    //
+    //
+    //     const SampleOnMesh &s = samples[0];
+    //
+    //     sampleXforms.push_back(AlignZToNormal(s.p, s.n));
+    //
+    //     //TODO: Instance procedural
+    //     // Procedural mesh("../models/epic_model/models/vegetation/leaf.ply",
+    //     //                 "vegetation",
+    //     //                 "coateddiffuse",
+    //     //                 "../models/epic_model/models/textures/fauna/Bush_2.png",
+    //     //                 "../models/epic_model/models/textures/fauna/Bush_2_Bump.png",
+    //     //                 "",
+    //     //                 "../models/epic_model/models/textures/fauna/Bush_2_Opacity.png");
+    //
+    //     // Procedural mesh("../models/epic_model/models/vegetation/test_veg.ply",
+    //     //                     "vegetation",
+    //     //                     "coateddiffuse",
+    //     //                     "../models/epic_model/models/textures/fauna/FULLA-ARBRE2.png",
+    //     //                     "",
+    //     //                     "",
+    //     //                     "../models/epic_model/models/textures/fauna/fullalfa.png");
+    //
+    //     Procedural mesh(meshFilename,
+    //                     namedMaterial,
+    //                     materialType,
+    //                     textureName,
+    //                     bumpMapName,
+    //                     normalMapName,
+    //                     opacityMapName);
+    //
+    //     // Procedural(const std::string& filepath,
+    //     // const std::string &namedMaterial = "", // Optional
+    //     // const std::string &materialType = "",
+    //     // const std::string &texture = "",
+    //     // const std::string &bumpMap = "",
+    //     // const std::string &normalMap = "",
+    //     // const std::string &opacityMap = "");
+    //     //
+    //
+    //
+    //     // TODO: Instance exporter
+    //     PBRTExporter exporter(mesh);
+    //
+    //     // TODO: Call the export method
+    //     // exporter.exportInstances(sampleXforms, "../models/epic_model/models/vegetation/instances.pbrt");
+    //     exporter.exportInstances(sampleXforms, outputFilePath);
+    //
+    //     printf("Done with one sample, exported to: %s\n", outputFilePath.c_str());
+    // }
+    // printf("Done exporting procedural mesh with name: %s\n", name.c_str());
+    makePCG(targetMeshFilename,
+            densityMapFilename,
+            nSamples,
+            meshFilename,
+            namedMaterial,
+            materialType,
+            textureName,
+            bumpMapName,
+            normalMapName,
+            opacityMapName,
+            outputFilePath);
+    // makePCG();
 }
+
+
 
 
 void BasicSceneBuilder::EndOfFiles() {

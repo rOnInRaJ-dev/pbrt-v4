@@ -428,6 +428,7 @@ class BasicSceneBuilder : public ParserTarget {
     void ObjectEnd(FileLoc loc);
     void ObjectInstance(const std::string &name, FileLoc loc);
 
+
     void ProceduralMesh(const std::string &name, ParsedParameterVector params, FileLoc loc);
 
     void EndOfFiles();
