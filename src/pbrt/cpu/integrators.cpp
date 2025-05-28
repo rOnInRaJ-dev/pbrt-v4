@@ -3239,6 +3239,23 @@ void SPPMIntegrator::Render() {
             metadata.fullResolution = camera.GetFilm().FullResolution();
             metadata.colorSpace = colorSpace;
             camera.InitMetadata(&metadata);
+
+            //print applyBilateral value
+            printf("checking bilateral ");
+            printf("%hhd\n", applyBilateral);
+            if(applyBilateral) {
+                printf("going to applybilateral filter now with:\n");
+
+                //print values
+                printf("sigmaSpatial: %f\n", bilateralSigmaSpatial);
+                printf("sigmaRange: %f\n", bilateralSigmaRange);
+
+
+
+
+                SPPMIntegrator::ApplyBilateralFilter(rgbImage);
+            }
+
             rgbImage.Write(camera.GetFilm().GetFilename(), metadata);
 
             // Write SPPM radius image, if requested
@@ -3274,6 +3291,86 @@ void SPPMIntegrator::Render() {
 #endif
     progress.Done();
     DisconnectFromDisplayServer();
+}
+
+
+void SPPMIntegrator::ApplyBilateralFilter(Image &image) {
+    LOG_VERBOSE("Applying bilateral filter to image");
+
+    Float sigmaSpatial = bilateralSigmaSpatial;
+    Float sigmaRange = bilateralSigmaRange;
+
+
+    Point2i res = image.Resolution();
+    std::vector<std::array<Float, 3>> filteredImage(res.x * res.y);
+
+
+    // Helper Function1: Get the pixel value at (x,y)
+    auto get = [&](int x, int y) {
+        return image.GetChannels(Point2i(x,y));
+    };
+
+    // Helper Functoin2: Get the distance between two pixels squared
+    auto dist2 = [&](int x, int y, int x2, int y2) {
+        return (x - x2) * (x - x2) + (y - y2) * (y - y2);
+    };
+
+
+    // get the radius of the affected area of pixels
+    int kernelRadius = std::ceil(sigmaSpatial * 2);
+
+
+    // run the filter in parallel threads, breaking up the image into tiles
+    // each thread will process a tile of the image
+    ParallelFor2D(Bounds2i{{0,0}, res},[&](Bounds2i tile) {
+
+        // loop through pixels in a tile
+        for (int y = tile.pMin.y; y < tile.pMax.y; ++y) {
+            for (int x = tile.pMin.x; x < tile.pMax.x; ++x) {
+
+                auto center = get(x, y); // pixel value at (x,y)
+                std::array<Float, 3> sum = {0, 0, 0}; // sum of pixelvalues
+                Float weightSum = 0; // sum of weights
+
+                // looping over each kernel neighborhood pixels
+                for (int dy = -kernelRadius; dy <= kernelRadius; ++dy) {
+                    for (int dx = -kernelRadius; dx <= kernelRadius; ++dx) {
+                        int nx = Clamp(x + dx, 0, res.x - 1); // clamp x to image bounds
+                        int ny = Clamp(y + dy, 0, res.y - 1); // clamp y to image bounds
+                        auto neighbor = get(nx,ny);
+
+                        // compute the spatial and range weights
+
+                        // spatial weight: nearer pixels have more weight
+                        float spatialW = std::exp(-dist2(x, y, nx, ny) / (2 * sigmaSpatial * sigmaSpatial));
+
+                        // range weight: similar color pixels have more weight
+                        float rangeW = std::exp(
+                            -(Sqr(neighbor[0] - center[0]) +
+                              Sqr(neighbor[1] - center[1]) +
+                              Sqr(neighbor[2] - center[2])) / (2 * sigmaRange * sigmaRange));
+
+                        float w = spatialW * rangeW;
+                        // float w = spatialW;
+                        for (int c = 0; c < 3; ++c)
+                            sum[c] += neighbor[c] * w;
+
+                        weightSum += w;
+                    }
+                }
+
+                for (int c = 0; c < 3; ++c)
+                    sum[c] /= weightSum;
+
+                filteredImage[y * res.x + x] = sum;
+            }
+        }
+    });
+
+    // write the filtered image back to the original image
+    for(int y = 0; y < res.y; ++y)
+        for(int x = 0; x < res.x; ++x)
+            image.SetChannels(Point2i(x,y), filteredImage[y * res.x + x]);
 }
 
 SampledSpectrum SPPMIntegrator::SampleLd(const SurfaceInteraction &intr, const BSDF &b,
@@ -3330,14 +3427,29 @@ std::string SPPMIntegrator::ToString() const {
 
 std::unique_ptr<SPPMIntegrator> SPPMIntegrator::Create(
     const ParameterDictionary &parameters, const RGBColorSpace *colorSpace, Camera camera,
-    Sampler sampler, Primitive aggregate, std::vector<Light> lights, const FileLoc *loc) {
+    Sampler sampler, Primitive aggregate, std::vector<Light> lights, const FileLoc *loc){
+
     int maxDepth = parameters.GetOneInt("maxdepth", 5);
     int photonsPerIter = parameters.GetOneInt("photonsperiteration", -1);
     Float radius = parameters.GetOneFloat("radius", 1.f);
     int seed = parameters.GetOneInt("seed", Options->seed);
+
+
+    // Apply bilateralFilteras
+    bool useBilateralFilter = parameters.GetOneBool("bilateral", false);
+    Float sigma_spatial = parameters.GetOneFloat("bilateral_sigma_spatial", 2.0);
+    Float sigma_range = parameters.GetOneFloat("bilateral_sigma_range", 0.2);
+
+    // print the values
+    printf("Parameters read");
+    printf("useBilateralFilter: %d\n", useBilateralFilter);
+    printf("sigma_spatial: %f\n", sigma_spatial);
+    printf("sigma_range: %f\n\n", sigma_range);
+
+
     return std::make_unique<SPPMIntegrator>(camera, sampler, aggregate, lights,
                                             photonsPerIter, maxDepth, radius, seed,
-                                            colorSpace);
+                                            colorSpace, useBilateralFilter, sigma_spatial, sigma_range);
 }
 
 // FunctionIntegrator Method Definitions

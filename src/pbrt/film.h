@@ -276,7 +276,7 @@ class RGBFilm : public FilmBase {
     RGBFilm(FilmBaseParameters p, const RGBColorSpace *colorSpace,
             Float maxComponentValue = Infinity, bool writeFP16 = true,
             Allocator alloc = {},
-            bool applyBilateralFilter = false, Float sigmaSpatial = 2.0, Float sigmaRange = 0.1); // Bilateral filter parameters in constructor
+            bool applyBilateralFilter = false, Float sigmaSpatial = 2.0, Float sigmaRange = 0.1);
 
     static RGBFilm *Create(const ParameterDictionary &parameters, Float exposureTime,
                            Filter filter, const RGBColorSpace *colorSpace,
@@ -286,7 +286,7 @@ class RGBFilm : public FilmBase {
     void AddSplat(Point2f p, SampledSpectrum v, const SampledWavelengths &lambda);
 
     void WriteImage(ImageMetadata metadata, Float splatScale = 1);
-    void ApplyBilateralFilter(Image &image, Float sigmaSpatial, Float sigmaRange); // Bilateral filter function
+    void ApplyBilateralFilter(Image &image, Float sigmaSpatial, Float sigmaRange);
     Image GetImage(ImageMetadata *metadata, Float splatScale = 1);
 
     std::string ToString() const;
@@ -316,7 +316,7 @@ class RGBFilm : public FilmBase {
     SquareMatrix<3> outputRGBFromSensorRGB;
     Array2D<Pixel> pixels;
 
-    bool applyBilateral; // Bilateral filter fields
+    bool applyBilateral;
     Float bilateralSigmaSpatial;
     Float bilateralSigmaRange;
 };

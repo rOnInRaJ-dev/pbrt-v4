@@ -438,7 +438,10 @@ class SPPMIntegrator : public Integrator {
     // SPPMIntegrator Public Methods
     SPPMIntegrator(Camera camera, Sampler sampler, Primitive aggregate,
                    std::vector<Light> lights, int photonsPerIteration, int maxDepth,
-                   Float initialSearchRadius, int seed, const RGBColorSpace *colorSpace)
+                   Float initialSearchRadius, int seed, const RGBColorSpace *colorSpace,
+                   bool applyBilateralFilter = false, Float sigmaSpatial = 2.0,
+                   Float sigmaRange = 0.1)
+
         : Integrator(aggregate, lights),
           camera(camera),
           samplerPrototype(sampler),
@@ -448,6 +451,10 @@ class SPPMIntegrator : public Integrator {
                                   ? photonsPerIteration
                                   : camera.GetFilm().PixelBounds().Area()),
           colorSpace(colorSpace),
+            applyBilateral(applyBilateralFilter),
+            bilateralSigmaSpatial(sigmaSpatial),
+            bilateralSigmaRange(sigmaRange),
+
           digitPermutationsSeed(seed) {}
 
     static std::unique_ptr<SPPMIntegrator> Create(const ParameterDictionary &parameters,
@@ -456,6 +463,10 @@ class SPPMIntegrator : public Integrator {
                                                   Primitive aggregate,
                                                   std::vector<Light> lights,
                                                   const FileLoc *loc);
+
+
+    void ApplyBilateralFilter(Image &image);
+
 
     std::string ToString() const;
 
@@ -475,6 +486,10 @@ class SPPMIntegrator : public Integrator {
     int maxDepth;
     int photonsPerIteration;
     const RGBColorSpace *colorSpace;
+
+    bool applyBilateral;
+    Float bilateralSigmaSpatial;
+    Float bilateralSigmaRange;
 };
 
 // FunctionIntegrator Definition

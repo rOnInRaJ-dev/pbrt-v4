@@ -489,7 +489,7 @@ RGBFilm::RGBFilm(FilmBaseParameters p, const RGBColorSpace *colorSpace,
       colorSpace(colorSpace),
       maxComponentValue(maxComponentValue),
       writeFP16(writeFP16),
-      applyBilateral(useBilateralFilter), // bilateral filter field init
+      applyBilateral(useBilateralFilter),
       bilateralSigmaSpatial(sigmaSpatial),
       bilateralSigmaRange(sigmaRange){
     filterIntegral = filter.Integral();
@@ -662,7 +662,7 @@ RGBFilm *RGBFilm::Create(const ParameterDictionary &parameters, Float exposureTi
                          const FileLoc *loc, Allocator alloc) {
 
     // Bilateral Filter Parameters
-    bool useBilateralFilter = parameters.GetOneBool("bilateral", false); // Bilateral filter call on bilateral scene parameters
+    bool useBilateralFilter = parameters.GetOneBool("bilateral", false);
     Float sigma_spatial = parameters.GetOneFloat("bilateral_sigma_spatial", 2.0);
     Float sigma_range = parameters.GetOneFloat("bilateral_sigma_range", 0.1);
 
