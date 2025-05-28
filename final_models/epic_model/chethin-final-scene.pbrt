@@ -13,7 +13,7 @@ PixelFilter "box"
     "float xradius" [ 1 ]
     "float yradius" [ 1 ]
 Film "rgb"
-    "string filename" [ "render.png" ]
+    "string filename" [ "scene.png" ]
     # "integer yresolution" [ 198 ]
     # "integer xresolution" [ 480 ]
     
@@ -311,10 +311,10 @@ Shape "plymesh"
 # ==========================
 
 Texture "vegetation_diffuse" "spectrum" "imagemap"
-    "string filename" [ "../models/epic_model/models/textures/fauna/Bush_2.png" ]
+    "string filename" [ "models/textures/fauna/Bush_2.png" ]
 
 Texture "vegetation_opacity" "float" "imagemap"
-    "string filename" [ "../models/epic_model/models/textures/fauna/Bush_2_Opacity.png" ]
+    "string filename" [ "models/textures/fauna/Bush_2_Opacity.png" ]
 
 MakeNamedMaterial "vegetation"
     "string type" ["diffuse"]
@@ -323,7 +323,7 @@ MakeNamedMaterial "vegetation"
 
 NamedMaterial "vegetation"
 Shape "plymesh" 
-    "string filename" [ "../models/epic_model/models/pcg_vegetation.ply" ]
+    "string filename" [ "models/pcg_vegetation.ply" ]
     "texture alpha" [ "vegetation_opacity" ]
 
 
