@@ -1,11 +1,5 @@
 Integrator "volpath"
 
-# Integrator "sppm"
-#     "float radius" [ 0.4]
-#     "integer maxdepth" [ 8 ]
-#     "bool bilateral" [ true ]
-#     "float bilateral_sigma_spatial" [ 0.8 ]
-#     "float bilateral_sigma_range" [ 0.2 ]
 Sampler "zsobol"
     "integer pixelsamples" [ 64 ]
 
@@ -31,7 +25,7 @@ Film "rgb"
     "float bilateral_sigma_range" [ 0.2 ]
 
 # NOTE: change to 3840 * 1583 for final render
-# isntead use 960 x 396 or even 480 x 198 for testing
+# instead use 960 x 396 or even 480 x 198 for testing
 
 # ==========================
 #  Camera
@@ -80,28 +74,6 @@ MakeNamedMaterial "tree_stump_wo_moss"
     "string type" ["diffuse"]
     "texture reflectance" ["tree_stump_dry_diffuse"]
 
-
-# Fallen branch texture 
-# Texture "branch_diffuse" "spectrum" "imagemap"
-#     "string filename" [ "models/textures/fauna/treebranch_BaseColor.jpg" ]
-
-# Texture "branch_specular" "float" "imagemap"
-#     "string filename" [ "models/textures/fauna/treebranch_Roughness.jpg" ]
-
-# MakeNamedMaterial "fallen_branch"
-#     "string type" ["coateddiffuse"]
-#     "texture reflectance" ["branch_diffuse"]
-#     "texture roughness" ["branch_specular"]
-#     "string normalmap" [ "models/textures/fauna/treebranch_Normal.jpg" ]
-
-Texture "branch_diffuse" "spectrum" "imagemap"
-    "string filename" [ "models/textures/fauna/obj_f_14500_v_7212.jpg" ]
-
-MakeNamedMaterial "fallen_branch"
-    "string type" ["coateddiffuse"]
-    "texture reflectance" ["branch_diffuse"]
-    "string normalmap" [ "models/textures/fauna/O_f_14500_v_7212_normals.png" ]
-
 # Short stump texture 
 Texture "short_stump_diffuse" "spectrum" "imagemap"
     "string filename" [ "models/textures/fauna/TreeStump024_COL_4K_METALNESS.png" ]
@@ -115,6 +87,17 @@ MakeNamedMaterial "short_stump"
     # "texture roughness" ["short_stump_specular"]
     "string normalmap" [ "models/textures/fauna/TreeStump024_NRM_4K_LOD0_METALNESS.png" ]
 
+
+# Broken branch texture 
+Texture "branch_diffuse" "spectrum" "imagemap"
+    "string filename" [ "models/textures/fauna/obj_f_14500_v_7212.jpg" ]
+
+MakeNamedMaterial "fallen_branch"
+    "string type" ["coateddiffuse"]
+    "texture reflectance" ["branch_diffuse"]
+    "string normalmap" [ "models/textures/fauna/O_f_14500_v_7212_normals.png" ]
+
+
 # Leaf texture for tree 
 Texture "leaf_tree_diffuse" "spectrum" "imagemap"
     "string filename" [ "models/textures/fauna/leaf_1.png" ]
@@ -125,6 +108,7 @@ Texture "leaf_tree_opacity" "float" "imagemap"
 MakeNamedMaterial "tree_leaf"
     "string type" ["coateddiffuse"]
     "texture reflectance" ["leaf_tree_diffuse"]
+
 
 # Fern leaf texture 
 Texture "fern_leaf_diffuse" "spectrum" "imagemap"
@@ -157,18 +141,17 @@ MakeNamedMaterial "lilypad"
     "string type" ["coateddiffuse"]
     "texture reflectance" ["lilypads_diffuse"]
 
-# # Vegetation texture
-# Texture "vegetation_diffuse" "spectrum" "imagemap"
-#     "string filename" [ "models/textures/fauna/FULLA-ARBRE2.png" ]
-    
-# Texture "vegetation_opacity" "float" "imagemap"
-#     "string filename" [ "models/textures/fauna/fullalfa.png" ]
+Texture "vegetation_diffuse" "spectrum" "imagemap"
+    "string filename" [ "models/textures/fauna/Bush_2.png" ]
 
-# MakeNamedMaterial "vegetation"
-#     "string type" ["coateddiffuse"]
-#     "texture reflectance" ["vegetation_diffuse"]
+Texture "vegetation_opacity" "float" "imagemap"
+    "string filename" [ "models/textures/fauna/Bush_2_Opacity.png" ]
 
+MakeNamedMaterial "vegetation"
+    "string type" ["diffuse"]
+    "texture reflectance" ["vegetation_diffuse"]
 
+# Concrete w/ moss texture
 Texture "concrete_moss" "spectrum" "imagemap"
     "string filename" [ "models/textures/moss/wet-moss-covered-house-wall.jpg" ]
 
@@ -176,6 +159,7 @@ MakeNamedMaterial "concrete"
     "string type" [ "coateddiffuse" ]
     "texture reflectance" ["concrete_moss"]
 
+# Water material 
 MakeNamedMaterial "water"
     "string type" ["dielectric"]
     "string normalmap" [ "models/textures/water/water_normal.png"]
@@ -188,13 +172,10 @@ MakeNamedMedium "water_medium"
     "float g" [0.5]                  # Isotropic scattering (change to 0.5 for murky water)
 
 
-
-
-# dirt texture 
+# Dirt texture 
 Texture "dirt_texture" "spectrum" "imagemap"
     "string filename" [ "models/textures/dirt/coast_sand_rocks_02_diff_4k.jpg" ]
 
-# dirt roughness texture 
 Texture "dirt_roughness_texture" "float" "imagemap"
     "string filename" [ "models/textures/dirt/coast_sand_rocks_02_rough_4k.exr" ]
 
@@ -205,7 +186,7 @@ MakeNamedMaterial "dirt"
     "string normalmap" [ "models/textures/dirt/coast_sand_rocks_02_nor_gl_4k.exr" ]
 
 
-# ANU LOGO TEXTURE
+# ANU Logo texture 
 Texture "ANUlogo_diffuse" "spectrum" "imagemap"
     "string filename" [ "models/textures/ANUlogo/anulogotexturebaked.png" ]
 
@@ -224,11 +205,10 @@ MakeNamedMaterial "ANUlogo_bars"
     "string type" [ "coateddiffuse" ]
     "rgb reflectance" [0 0 0]
 
-# dirt texture 
+# Metal texture 
 Texture "metal_texture" "spectrum" "imagemap"
     "string filename" [ "models/textures/metal/metal_0002_color_1k.jpg" ]
 
-# dirt roughness texture 
 Texture "metal_roughness_texture" "float" "imagemap"
     "string filename" [ "models/textures/metal/metal_0002_roughness_1k.jpg" ]
 
@@ -237,6 +217,7 @@ MakeNamedMaterial "metal"
     "texture reflectance" ["metal_texture"]
     "texture roughness" ["metal_roughness_texture"]
     "string normalmap" [ "models/textures/metal/metal_0002_normal_opengl_1k.png"]
+
 
 # ==========================
 #  Meshes
@@ -258,29 +239,31 @@ NamedMaterial "ANUlogo_bars"
 Shape "plymesh"
     "string filename" [ "models/ANU_Logo_bars.ply" ]
 
+
 NamedMaterial "tree_stump_w_moss"
 Shape "plymesh"
-    "string filename" [ "models/stump_new.ply" ] # Main stump; closest to camera 
+    "string filename" [ "models/stump_main.ply" ] # Main stump; closest to camera 
 NamedMaterial "short_stump"
 Shape "plymesh"
-    "string filename" [ "models/stump_2_new.ply" ] # Far back, center stump
+    "string filename" [ "models/stump_farback.ply" ] # Far back, center stump
 NamedMaterial "short_stump"
 Shape "plymesh"
-    "string filename" [ "models/stump_3_new.ply" ] # Left stump
+    "string filename" [ "models/stump_left.ply" ] # Left stump
 NamedMaterial "tree_stump_w_moss"
 Shape "plymesh"
-    "string filename" [ "models/stumps_new.ply" ] # Remaining stumps
+    "string filename" [ "models/stumps_rem.ply" ] # Remaining stumps
 
 
 NamedMaterial "fallen_branch"
 Shape "plymesh"
-    "string filename" [ "models/fallen_branch_new.ply" ]
+    "string filename" [ "models/fallen_branch.ply" ]
 
 # Tree
 NamedMaterial "tree_leaf"
 Shape "plymesh"
-    "string filename" [ "models/tree_new.ply" ]
+    "string filename" [ "models/tree.ply" ]
     "texture alpha" [ "leaf_tree_opacity" ]
+
 
 NamedMaterial "fern_leaf_2"
 Shape "plymesh"
@@ -296,29 +279,11 @@ Shape "plymesh"
     "string filename" [ "models/underwater_plants.ply" ]
     "texture alpha" [ "fern_leaf_opacity" ]
 
+
 # Lilypads 
 NamedMaterial "lilypad"
 Shape "plymesh"
     "string filename" [ "models/lilypads.ply" ]
-
-
-
-# Import instances 
-# Include "models/vegetation/instances.pbrt"
-
-# ==========================
-#  Temp PCG Meshes
-# ==========================
-
-Texture "vegetation_diffuse" "spectrum" "imagemap"
-    "string filename" [ "models/textures/fauna/Bush_2.png" ]
-
-Texture "vegetation_opacity" "float" "imagemap"
-    "string filename" [ "models/textures/fauna/Bush_2_Opacity.png" ]
-
-MakeNamedMaterial "vegetation"
-    "string type" ["diffuse"]
-    "texture reflectance" ["vegetation_diffuse"]
 
 
 NamedMaterial "vegetation"
@@ -327,24 +292,16 @@ Shape "plymesh"
     "texture alpha" [ "vegetation_opacity" ]
 
 
-
-
-
-
-
 # UV unwrapped floor
 NamedMaterial "dirt"
 Shape "plymesh"
-    "string filename" [ "models/floor_new.ply" ]
+    "string filename" [ "models/floor.ply" ]
 
 
 NamedMaterial "water"
 MediumInterface "water_medium" ""
-
 Shape "plymesh"
     "string filename" [ "models/water.ply" ]
-
-
 
 NamedMaterial "concrete"
 Shape "plymesh"
@@ -360,33 +317,17 @@ Shape "plymesh"
 
 NamedMaterial "metal"
 Shape "plymesh"
-    "string filename" [ "models/pipes.ply" ]
-
-# Mock PCG
-# NamedMaterial "fern_leaf"
-# Shape "plymesh"
-#     "string filename" [ "models/PCG-mock.ply" ]
-#     "texture alpha" [ "fern_leaf_opacity" ]    
+    "string filename" [ "models/pipes.ply" ] 
 
     
 # ==========================
 #  Light sources
-# ==========================
+# ==========================            
 
-# # ambient light source
-# LightSource "infinite" "rgb L" [ .2 .2 .2 ]
-
-# #  sun light source
-# LightSource "distant"
-#     "rgb L" [5.2 5.1 4.8]            
-#     "point3 from" [ 100 100 -100 ]         
-#     "point3 to"   [ 0 0 0 ]                
-
-
-    # ambient light source
+# ambient light source
 LightSource "infinite" "rgb L" [ .2 .2 .2 ]
 
-#  sun light source
+# sun light source
 LightSource "distant"
     # "blackbody L" [6500 ]
     "float illuminance" [ 0.6 ]
