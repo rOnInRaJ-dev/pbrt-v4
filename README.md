@@ -7,8 +7,7 @@ This repository contains the source code for the rendering system, PBRT-v4 exten
 
 The PBRT-v4 source code is available at [git respository](https://github.com/mmp/pbrt-v4). 
 
-The source code for bilaterial filtering can be found at 
-## TODO RAJ
+The source code for bilaterial filtering can be found in `film.cpp` in the `RGBFilm::ApplyBilateralFilter()` function.
 
 The source code for PCG can be found in `pbrt-v4/src/pbrt/pcgUtil`. The new classes we implemented are: 
 
@@ -17,13 +16,9 @@ The source code for PCG can be found in `pbrt-v4/src/pbrt/pcgUtil`. The new clas
 * pbrt_exporter 
 * sampleTo3D 
 
-`pbrt-v4/src/pbrt/util/transformer.cpp` was updated for PCG. 
-
-## TODO RILEY 
+`pbrt-v4/src/pbrt/util/transformer.h` was updated for PCG. 
 
 `pbrt-v4/src/pbrt/cmd/pbrt.cpp` is modified with our implementation from Lines 288-351. 
-
-
 
 ## Building the code 
 
@@ -48,11 +43,9 @@ Inside the `build` folder, a `scene.png` file should be generated.
 
 #### Bilateral Filtering 
 
-To test rendering the scene with/without bilateral filtering, you need update `pbrt-v4/epic_model/scene-v4.pbrt` file. Set the `bilateral` parameter to `true` or `false`. 
+To test rendering the scene with/without bilateral filtering, you need update `pbrt-v4/final_models/epic_model/final-scene.pbrt` file. Set the `bilateral` parameter to `true` or `false`. 
 
-You can also edit the `bilateral_sigma_spatial` and `bilateral_sigma_range` parameters...
-
-## TODO RAJ 
+You can also edit the `bilateral_sigma_spatial` and `bilateral_sigma_range` parameters. 
 
 Here is an example. 
 
@@ -69,8 +62,26 @@ Film "rgb"
 
 #### Procedural Content Generation
 
-To test PCG, you need to run the following command: 
+To test PCG, you need to define `ProceduralMesh` in final-scene.pbrt. This will write to instances.pbrt file.
 
-## TODO RAJ 
+An example is given below: 
+```
+ProceduralMesh "../final_models/epic_model/models/vegetation/leaf.ply"
+    "string filename" [ "../final_models/epic_model/models/floor.ply" ]
+    "string densitymap" [ "../final_models/epic_model/models/vegetation/DM1.png" ]
+    "integer nSamples" [ 100 ]
+    "string meshFilename" [ "../final_models/epic_model/models/vegetation/leaf.ply" ]
+    "string namedMaterial" [ "vegetation" ]
+    "string materialType" [ "coatedDiffuse" ]
+    "string texture" [ "../final_models/epic_model/models/textures/fauna/Bush_2.png" ]
+    "string bumpMap" [ "" ]
+    "string normalMap" [ "" ]
+    "string opacityMap" [ "../final_models/epic_model/models/textures/fauna/Bush_2_Opacity.png" ]
+    "string outputFilePath" [ "../final_models/epic_model/models/vegetation/instances.pbrt" ]
+```
 
+Then, include the instances.pbrt file in final-scene.pbrt by: 
+```
+Import file_path/instances.pbrt
+```
 
