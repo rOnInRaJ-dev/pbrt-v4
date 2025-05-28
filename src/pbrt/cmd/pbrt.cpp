@@ -29,6 +29,8 @@
 #include <pbrt/pcgUtil/procedural.h>
 #include <pbrt/pcgUtil/sampleTo3D.h>
 
+#include <pbrt/godrayUtil/godrayGenerator.h>
+
 #include <string>
 #include <vector>
 #include <iostream>
@@ -285,10 +287,7 @@ int main(int argc, char *argv[]) {
     if (format || toPly || options.upgrade) {
         FormattingParserTarget formattingTarget(toPly, options.upgrade);
         ParseFiles(&formattingTarget, filenames);
-    } else {
-
     }
-    
 
     // Parse provided scene description files
     BasicScene scene;

@@ -46,6 +46,11 @@ ConcatTransform [
 Camera "perspective"
     "float fov" [ 25 ] 
 
+MakeNamedMedium "godray" "string type" "homogeneous"
+    "rgb sigma_s" [0.05 0.05 0.05]
+    "rgb sigma_a" [0.05 0.05 0.05]
+    "float g"     [0.95]
+
 
 WorldBegin
 
@@ -354,3 +359,24 @@ LightSource "spot"
     "float coneangle" [ 30 ]
     "float conedeltaangle" [ 20 ]
 AttributeEnd
+
+
+
+
+
+
+
+
+
+AttributeBegin 
+    Material "interface"
+    MediumInterface "godray" ""
+    Shape "plymesh" "string filename" ["models/godray2.ply"]
+AttributeEnd
+
+AttributeBegin
+LightSource "point"
+    "point3 from" [4 2 1]
+    "rgb I"     [3000 3000 2600]
+AttributeEnd
+

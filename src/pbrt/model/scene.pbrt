@@ -32,8 +32,14 @@ ConcatTransform [
 Camera "perspective"
     "float fov" [ 32.9 ]   
 
+MakeNamedMedium "godray" "string type" "homogeneous"
+    "rgb sigma_s" [0.05 0.05 0.05]
+    "rgb sigma_a" [0.05 0.05 0.05]
+    "float g"     [0.95]
 
 WorldBegin
+
+Include "godrayGenerated.pbrt"
 
 # ==========================
 #  Materials
