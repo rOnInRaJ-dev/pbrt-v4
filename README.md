@@ -18,7 +18,7 @@ The source code for PCG can be found in `pbrt-v4/src/pbrt/pcgUtil`. The new clas
 
 `pbrt-v4/src/pbrt/util/transformer.h` was updated for PCG. 
 
-`pbrt-v4/src/pbrt/cmd/pbrt.cpp` is modified with our implementation from Lines 288-351. 
+`pbrt-v4/src/pbrt/cmd/scene.cpp` is modified with our implementation of parameterized input for pcg in the `ProceduralMesh()` function. 
 
 ## Building the code 
 
@@ -72,7 +72,7 @@ ProceduralMesh "../final_models/epic_model/models/vegetation/leaf.ply"
     "integer nSamples" [ 100 ]
     "string meshFilename" [ "../final_models/epic_model/models/vegetation/leaf.ply" ]
     "string namedMaterial" [ "vegetation" ]
-    "string materialType" [ "coatedDiffuse" ]
+    "string materialType" [ "diffuse" ]
     "string texture" [ "../final_models/epic_model/models/textures/fauna/Bush_2.png" ]
     "string bumpMap" [ "" ]
     "string normalMap" [ "" ]

@@ -141,16 +141,16 @@ MakeNamedMaterial "lilypad"
     "string type" ["coateddiffuse"]
     "texture reflectance" ["lilypads_diffuse"]
 
-#### TESTING ONLY 
-# Texture "vegetation_diffuse" "spectrum" "imagemap"
-#     "string filename" [ "models/textures/fauna/Bush_2.png" ]
 
-# Texture "vegetation_opacity" "float" "imagemap"
-#     "string filename" [ "models/textures/fauna/Bush_2_Opacity.png" ]
+Texture "vegetation_diffuse" "spectrum" "imagemap"
+    "string filename" [ "models/textures/fauna/Bush_2.png" ]
 
-# MakeNamedMaterial "vegetation"
-#     "string type" ["diffuse"]
-#     "texture reflectance" ["vegetation_diffuse"]
+Texture "vegetation_opacity" "float" "imagemap"
+    "string filename" [ "models/textures/fauna/Bush_2_Opacity.png" ]
+
+MakeNamedMaterial "vegetation"
+    "string type" ["diffuse"]
+    "texture reflectance" ["vegetation_diffuse"]
 
 # Concrete w/ moss texture
 Texture "concrete_moss" "spectrum" "imagemap"
@@ -287,11 +287,10 @@ Shape "plymesh"
     "string filename" [ "models/lilypads.ply" ]
 
 
-#### TESTING ONLY 
-# NamedMaterial "vegetation"
-# Shape "plymesh" 
-#     "string filename" [ "models/pcg_vegetation.ply" ]
-#     "texture alpha" [ "vegetation_opacity" ]
+NamedMaterial "vegetation"
+Shape "plymesh" 
+    "string filename" [ "models/pcg_vegetation.ply" ]
+    "texture alpha" [ "vegetation_opacity" ]
 
 
 # UV unwrapped floor
@@ -321,36 +320,6 @@ NamedMaterial "metal"
 Shape "plymesh"
     "string filename" [ "models/pipes.ply" ] 
 
-# TESTING PROCEDURAL MESHES
-    # // parameters:
-    # // 1. mesh filename
-    # // 2. custom density map
-    # // 3. nSamples
-    # // 4. Mesh stuff
-    # //   - filename
-    # //   - namedMaterial
-    # //   - materialType
-    # //   - texture
-    # //   - bumpMap
-    # //   - normalMap
-    # //   - opacityMap
-ProceduralMesh "../final_models/epic_model/models/vegetation/leaf.ply"
-    "string filename" [ "../final_models/epic_model/models/floor.ply" ]
-    "string densitymap" [ "../final_models/epic_model/models/vegetation/DMExperiment.png" ]
-    "integer nSamples" [ 200 ]
-    "string meshFilename" [ "../final_models/epic_model/models/vegetation/leaf.ply" ]
-    "string namedMaterial" [ "vegetation" ]
-    "string materialType" [ "coatedDiffuse" ]
-    "string texture" [ "../final_models/epic_model/models/textures/fauna/Bush_2.png" ]
-    "string bumpMap" [ "" ]
-    "string normalMap" [ "" ]
-    "string opacityMap" [ "../final_models/epic_model/models/textures/fauna/Bush_2_Opacity.png" ]
-    "string outputFilePath" [ "../final_models/epic_model/models/vegetation/instances.pbrt" ]
-
-# Include "models/epic_model/models/vegetation/instances.pbrt"
-Include "models/vegetation/instances.pbrt"
-
-    
 # ==========================
 #  Light sources
 # ==========================            
