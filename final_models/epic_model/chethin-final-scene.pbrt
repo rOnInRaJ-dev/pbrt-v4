@@ -1,0 +1,415 @@
+Integrator "volpath"
+
+# Integrator "sppm"
+#     "float radius" [ 0.4]
+#     "integer maxdepth" [ 8 ]
+#     "bool bilateral" [ true ]
+#     "float bilateral_sigma_spatial" [ 0.8 ]
+#     "float bilateral_sigma_range" [ 0.2 ]
+Sampler "zsobol"
+    "integer pixelsamples" [ 64 ]
+
+PixelFilter "box"
+    "float xradius" [ 1 ]
+    "float yradius" [ 1 ]
+Film "rgb"
+    "string filename" [ "render.png" ]
+    # "integer yresolution" [ 198 ]
+    # "integer xresolution" [ 480 ]
+    
+    # "integer yresolution" [ 396 ]
+    # "integer xresolution" [ 960 ]
+
+    "integer yresolution" [ 792 ]
+    "integer xresolution" [ 1920 ]
+
+    # "integer yresolution" [ 1584 ]
+    # "integer xresolution" [ 3840 ]
+
+    "bool bilateral" [ false ]
+    "float bilateral_sigma_spatial" [ 1 ]
+    "float bilateral_sigma_range" [ 0.2 ]
+
+# NOTE: change to 3840 * 1583 for final render
+# isntead use 960 x 396 or even 480 x 198 for testing
+
+# ==========================
+#  Camera
+# ==========================
+
+# LookAt cameraX cameraY cameraZ   targetX targetY targetZ   0 1 0
+# use camera location and empty location from blender
+# NOTE: y and z are flipped from blender
+LookAt 34.6973 60.4767 -52.6609   9.83891 -1.83499 5.33137   0 1 0
+
+#  flip x axis
+ConcatTransform [ 
+    -1 0 0 0
+    0 1 0 0
+    0 0 1 0
+    0 0 0 1 ]
+
+Camera "perspective"
+    "float fov" [ 25 ] 
+
+
+WorldBegin
+
+# ==========================
+#  Materials
+# ==========================
+
+# Moss covered tree stump texture 
+Texture "tree_stump_moss_diffuse" "spectrum" "imagemap"
+    "string filename" [ "models/textures/fauna/Tree_stump_002_high_lods_Diffuse.png" ]
+
+Texture "tree_stump_moss_specular" "float" "imagemap"
+    "string filename" [ "models/textures/fauna/Tree_stump_002_high_lods_Specular.png" ]
+
+MakeNamedMaterial "tree_stump_w_moss"
+    "string type" ["coateddiffuse"]
+    "texture reflectance" ["tree_stump_moss_diffuse"]
+    "texture roughness" ["tree_stump_moss_specular"]
+    "string normalmap" [ "models/textures/fauna/Tree_stump_002_high_lods_Normal_opengl.png" ]
+
+# Dry/dull tree stump texture 
+Texture "tree_stump_dry_diffuse" "spectrum" "imagemap"
+    "string filename" [ "models/textures/fauna/Tree - High Quality.jpg" ]
+
+MakeNamedMaterial "tree_stump_wo_moss"
+    "string type" ["diffuse"]
+    "texture reflectance" ["tree_stump_dry_diffuse"]
+
+
+# Fallen branch texture 
+# Texture "branch_diffuse" "spectrum" "imagemap"
+#     "string filename" [ "models/textures/fauna/treebranch_BaseColor.jpg" ]
+
+# Texture "branch_specular" "float" "imagemap"
+#     "string filename" [ "models/textures/fauna/treebranch_Roughness.jpg" ]
+
+# MakeNamedMaterial "fallen_branch"
+#     "string type" ["coateddiffuse"]
+#     "texture reflectance" ["branch_diffuse"]
+#     "texture roughness" ["branch_specular"]
+#     "string normalmap" [ "models/textures/fauna/treebranch_Normal.jpg" ]
+
+Texture "branch_diffuse" "spectrum" "imagemap"
+    "string filename" [ "models/textures/fauna/obj_f_14500_v_7212.jpg" ]
+
+MakeNamedMaterial "fallen_branch"
+    "string type" ["coateddiffuse"]
+    "texture reflectance" ["branch_diffuse"]
+    "string normalmap" [ "models/textures/fauna/O_f_14500_v_7212_normals.png" ]
+
+# Short stump texture 
+Texture "short_stump_diffuse" "spectrum" "imagemap"
+    "string filename" [ "models/textures/fauna/TreeStump024_COL_4K_METALNESS.png" ]
+
+Texture "short_stump_specular" "float" "imagemap"
+    "string filename" [ "models/textures/fauna/TreeStump024_ROUGHNESS_4K_METALNESS.png" ]
+
+MakeNamedMaterial "short_stump"
+    "string type" ["coateddiffuse"]
+    "texture reflectance" ["short_stump_diffuse"]
+    # "texture roughness" ["short_stump_specular"]
+    "string normalmap" [ "models/textures/fauna/TreeStump024_NRM_4K_LOD0_METALNESS.png" ]
+
+# Leaf texture for tree 
+Texture "leaf_tree_diffuse" "spectrum" "imagemap"
+    "string filename" [ "models/textures/fauna/leaf_1.png" ]
+
+Texture "leaf_tree_opacity" "float" "imagemap"
+    "string filename" [ "models/textures/fauna/tree_opacity.jpeg" ]
+
+MakeNamedMaterial "tree_leaf"
+    "string type" ["coateddiffuse"]
+    "texture reflectance" ["leaf_tree_diffuse"]
+
+# Fern leaf texture 
+Texture "fern_leaf_diffuse" "spectrum" "imagemap"
+    "string filename" [ "models/textures/fauna/Fern_Plant_Preview_FREE_Model_BASE_COLOR_(Albedo)_MAP.png" ]
+
+Texture "fern_leaf_opacity" "float" "imagemap"
+    "string filename" [ "models/textures/fauna/Fern_Plant_Preview_FREE_Model_OPACITY_MAP.png" ]
+
+MakeNamedMaterial "fern_leaf"
+    "string type" ["diffuse"]
+    "texture reflectance" ["fern_leaf_diffuse"]
+    "string normalmap" [ "models/textures/fauna/Fern_Plant_Preview_FREE_Model_NORMAL_MAP.png" ]
+
+Texture "fern_leaf_2_diffuse" "spectrum" "imagemap"
+    "string filename" [ "models/textures/fauna/fern_tree_diffuse.png" ]
+
+Texture "fern_leaf_2_opacity" "float" "imagemap"
+    "string filename" [ "models/textures/fauna/fern_tree_opacity.png" ]
+
+MakeNamedMaterial "fern_leaf_2"
+    "string type" ["diffuse"]
+    "texture reflectance" ["fern_leaf_2_diffuse"]
+    # "string normalmap" [ "models/textures/fauna/fern_tree_diffuse.png" ]
+
+
+# Lilypads texture 
+Texture "lilypads_diffuse" "spectrum" "imagemap"
+    "string filename" [ "models/textures/fauna/lilypad_diffuse.png" ]
+MakeNamedMaterial "lilypad"
+    "string type" ["coateddiffuse"]
+    "texture reflectance" ["lilypads_diffuse"]
+
+# # Vegetation texture
+# Texture "vegetation_diffuse" "spectrum" "imagemap"
+#     "string filename" [ "models/textures/fauna/FULLA-ARBRE2.png" ]
+    
+# Texture "vegetation_opacity" "float" "imagemap"
+#     "string filename" [ "models/textures/fauna/fullalfa.png" ]
+
+# MakeNamedMaterial "vegetation"
+#     "string type" ["coateddiffuse"]
+#     "texture reflectance" ["vegetation_diffuse"]
+
+
+Texture "concrete_moss" "spectrum" "imagemap"
+    "string filename" [ "models/textures/moss/wet-moss-covered-house-wall.jpg" ]
+
+MakeNamedMaterial "concrete"
+    "string type" [ "coateddiffuse" ]
+    "texture reflectance" ["concrete_moss"]
+
+MakeNamedMaterial "water"
+    "string type" ["dielectric"]
+    "string normalmap" [ "models/textures/water/water_normal.png"]
+    "float eta" [1.33]         # Refractive index of water
+
+MakeNamedMedium "water_medium"
+    "string type" ["homogeneous"]
+    "rgb sigma_a" [0.2 0.1 0.01]     # Absorbs red and green more than blue
+    "rgb sigma_s" [0.005 0.01 0.02]  # Scatters blue more than red
+    "float g" [0.5]                  # Isotropic scattering (change to 0.5 for murky water)
+
+
+
+
+# dirt texture 
+Texture "dirt_texture" "spectrum" "imagemap"
+    "string filename" [ "models/textures/dirt/coast_sand_rocks_02_diff_4k.jpg" ]
+
+# dirt roughness texture 
+Texture "dirt_roughness_texture" "float" "imagemap"
+    "string filename" [ "models/textures/dirt/coast_sand_rocks_02_rough_4k.exr" ]
+
+MakeNamedMaterial "dirt"
+    "string type" [ "coateddiffuse" ]
+    "texture reflectance" ["dirt_texture"]
+    "texture roughness" ["dirt_roughness_texture"]
+    "string normalmap" [ "models/textures/dirt/coast_sand_rocks_02_nor_gl_4k.exr" ]
+
+
+# ANU LOGO TEXTURE
+Texture "ANUlogo_diffuse" "spectrum" "imagemap"
+    "string filename" [ "models/textures/ANUlogo/anulogotexturebaked.png" ]
+
+MakeNamedMaterial "ANUlogo"
+    "string type" [ "coateddiffuse" ]
+    "texture reflectance" ["ANUlogo_diffuse"]
+
+Texture "ANUlogo_base_diffuse" "spectrum" "imagemap"
+    "string filename" [ "models/textures/ANUlogo/ANU_moss.png" ]
+    
+MakeNamedMaterial "ANUlogo_base"
+    "string type" [ "coateddiffuse" ]
+    "texture reflectance" ["ANUlogo_base_diffuse"]
+
+MakeNamedMaterial "ANUlogo_bars"
+    "string type" [ "coateddiffuse" ]
+    "rgb reflectance" [0 0 0]
+
+# dirt texture 
+Texture "metal_texture" "spectrum" "imagemap"
+    "string filename" [ "models/textures/metal/metal_0002_color_1k.jpg" ]
+
+# dirt roughness texture 
+Texture "metal_roughness_texture" "float" "imagemap"
+    "string filename" [ "models/textures/metal/metal_0002_roughness_1k.jpg" ]
+
+MakeNamedMaterial "metal"
+    "string type" ["conductor"]
+    "texture reflectance" ["metal_texture"]
+    "texture roughness" ["metal_roughness_texture"]
+    "string normalmap" [ "models/textures/metal/metal_0002_normal_opengl_1k.png"]
+
+# ==========================
+#  Meshes
+# ==========================
+
+NamedMaterial "concrete"
+    Shape "plymesh"
+    "string filename" [ "models/shade.ply" ]
+
+NamedMaterial "ANUlogo"
+Shape "plymesh"
+    "string filename" [ "models/ANU_Logo.ply" ]
+
+NamedMaterial "ANUlogo_base"
+Shape "plymesh"
+    "string filename" [ "models/ANU_Logo_base.ply" ]
+
+NamedMaterial "ANUlogo_bars"
+Shape "plymesh"
+    "string filename" [ "models/ANU_Logo_bars.ply" ]
+
+NamedMaterial "tree_stump_w_moss"
+Shape "plymesh"
+    "string filename" [ "models/stump_new.ply" ] # Main stump; closest to camera 
+NamedMaterial "short_stump"
+Shape "plymesh"
+    "string filename" [ "models/stump_2_new.ply" ] # Far back, center stump
+NamedMaterial "short_stump"
+Shape "plymesh"
+    "string filename" [ "models/stump_3_new.ply" ] # Left stump
+NamedMaterial "tree_stump_w_moss"
+Shape "plymesh"
+    "string filename" [ "models/stumps_new.ply" ] # Remaining stumps
+
+
+NamedMaterial "fallen_branch"
+Shape "plymesh"
+    "string filename" [ "models/fallen_branch_new.ply" ]
+
+# Tree
+NamedMaterial "tree_leaf"
+Shape "plymesh"
+    "string filename" [ "models/tree_new.ply" ]
+    "texture alpha" [ "leaf_tree_opacity" ]
+
+NamedMaterial "fern_leaf_2"
+Shape "plymesh"
+    "string filename" [ "models/ferns_new.ply" ]
+    "texture alpha" [ "fern_leaf_2_opacity" ]
+NamedMaterial "fern_leaf"
+Shape "plymesh"
+    "string filename" [ "models/ferns_2.ply" ]
+    "texture alpha" [ "fern_leaf_opacity" ]
+
+NamedMaterial "fern_leaf"
+Shape "plymesh"
+    "string filename" [ "models/underwater_plants.ply" ]
+    "texture alpha" [ "fern_leaf_opacity" ]
+
+# Lilypads 
+NamedMaterial "lilypad"
+Shape "plymesh"
+    "string filename" [ "models/lilypads.ply" ]
+
+
+
+# Import instances 
+# Include "models/vegetation/instances.pbrt"
+
+# ==========================
+#  Temp PCG Meshes
+# ==========================
+
+Texture "vegetation_diffuse" "spectrum" "imagemap"
+    "string filename" [ "../models/epic_model/models/textures/fauna/Bush_2.png" ]
+
+Texture "vegetation_opacity" "float" "imagemap"
+    "string filename" [ "../models/epic_model/models/textures/fauna/Bush_2_Opacity.png" ]
+
+MakeNamedMaterial "vegetation"
+    "string type" ["diffuse"]
+    "texture reflectance" ["vegetation_diffuse"]
+
+
+NamedMaterial "vegetation"
+Shape "plymesh" 
+    "string filename" [ "../models/epic_model/models/pcg_vegetation.ply" ]
+    "texture alpha" [ "vegetation_opacity" ]
+
+
+
+
+
+
+
+# UV unwrapped floor
+NamedMaterial "dirt"
+Shape "plymesh"
+    "string filename" [ "models/floor_new.ply" ]
+
+
+NamedMaterial "water"
+MediumInterface "water_medium" ""
+
+Shape "plymesh"
+    "string filename" [ "models/water.ply" ]
+
+
+
+NamedMaterial "concrete"
+Shape "plymesh"
+    "string filename" [ "models/owl.ply" ]
+
+NamedMaterial "concrete"
+Shape "plymesh"
+    "string filename" [ "models/owl_stand.ply" ]
+
+NamedMaterial "metal"
+Shape "plymesh"
+    "string filename" [ "models/center.ply" ]
+
+NamedMaterial "metal"
+Shape "plymesh"
+    "string filename" [ "models/pipes.ply" ]
+
+# Mock PCG
+# NamedMaterial "fern_leaf"
+# Shape "plymesh"
+#     "string filename" [ "models/PCG-mock.ply" ]
+#     "texture alpha" [ "fern_leaf_opacity" ]    
+
+    
+# ==========================
+#  Light sources
+# ==========================
+
+# # ambient light source
+# LightSource "infinite" "rgb L" [ .2 .2 .2 ]
+
+# #  sun light source
+# LightSource "distant"
+#     "rgb L" [5.2 5.1 4.8]            
+#     "point3 from" [ 100 100 -100 ]         
+#     "point3 to"   [ 0 0 0 ]                
+
+
+    # ambient light source
+LightSource "infinite" "rgb L" [ .2 .2 .2 ]
+
+#  sun light source
+LightSource "distant"
+    # "blackbody L" [6500 ]
+    "float illuminance" [ 0.6 ]
+    "float scale" [ 0.5 ]
+    "rgb L" [5.2 5.1 4.8]            
+    "point3 from" [ -100 100 50 ]         
+    "point3 to"   [ 0 0 0 ]                
+LightSource "distant"
+    # "blackbody L" [6500 ]
+    "float illuminance" [ 1 ]
+    "float scale" [ 0.8 ]
+    "rgb L" [5.2 5.1 4.8]            
+    "point3 from" [ 1000 1000 -1000 ]         
+    "point3 to"   [ 0 0 0 ]                
+
+AttributeBegin
+LightSource "spot"
+    "blackbody I" [ 6500 ]
+    "float power" [ 1500 ]
+    "float scale" [ 10 ]
+    # "rgb I" [5.2 5.1 4.8]            
+    "point3 from" [ -50 50 50 ]
+    "point3 to"   [ 0 0 0 ]
+    "float coneangle" [ 30 ]
+    "float conedeltaangle" [ 20 ]
+AttributeEnd
