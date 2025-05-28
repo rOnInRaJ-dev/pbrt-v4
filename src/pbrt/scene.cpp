@@ -432,7 +432,7 @@ void makePCG(const std::string &targetMeshFilename,
                  const std::string &NormalMapName,
                  const std::string &opacitymapName,
                  const std::string &outputFilePath) {
-// void makePCG(){
+
            TriQuadMesh triQuad = TriQuadMesh::ReadPLY(targetMeshFilename);
            // TriQuadMesh triQuad = TriQuadMesh::ReadPLY("../models/epic_model/models/floor_new.ply");
         triQuad.ConvertToOnlyTriangles();
@@ -478,32 +478,6 @@ void makePCG(const std::string &targetMeshFilename,
 
             sampleXforms.push_back(AlignZToNormal(s.p, s.n));
 
-            //TODO: Instance procedural
-            // Procedural mesh("../models/epic_model/models/vegetation/leaf.ply",
-            //                 "vegetation",
-            //                 "coateddiffuse",
-            //                 "../models/epic_model/models/textures/fauna/Bush_2.png",
-            //                 "../models/epic_model/models/textures/fauna/Bush_2_Bump.png",
-            //                 "",
-            //                 "../models/epic_model/models/textures/fauna/Bush_2_Opacity.png");
-//             const std::string &meshFilename,
-//             const std::string &namedMaterial,
-//             const std::string &materialType,
-//             const std::string &textureName,
-//             const std::string &bumpMapName,
-//             const std::string &NormalMapName,
-//             const std::string &opacitymapName,
-//             const std::string &outputFilePath) {
-
-
-            // Procedural mesh("../models/epic_model/models/vegetation/test_veg.ply",
-            //                     "vegetation",
-            //                     "coateddiffuse",
-            //                     "../models/epic_model/models/textures/fauna/FULLA-ARBRE2.png",
-            //                     "",
-            //                     "",
-            //                     "../models/epic_model/models/textures/fauna/fullalfa.png");
-
             Procedural mesh(meshFilename,
                                 namedMaterial,
                                 materialType,
@@ -538,6 +512,7 @@ void makePCG(const std::string &targetMeshFilename,
     // 5. outputFilePath
 
 void BasicSceneBuilder::ProceduralMesh(const std::string &name, ParsedParameterVector params, FileLoc loc) {
+
     printf("i have successfullly called proceduralMesh from basicsceneBuilder with the name: %s\n", name.c_str());
 
     // get the mesh filename
@@ -689,98 +664,6 @@ void BasicSceneBuilder::ProceduralMesh(const std::string &name, ParsedParameterV
     printf("opacityMapName: %s\n", opacityMapName.c_str());
     printf("outputFilePath: %s\n", outputFilePath.c_str());
 
-    // // load the ply trimesh
-    // TriQuadMesh triQuad = TriQuadMesh::ReadPLY(targetMeshFilename);
-    // triQuad.ConvertToOnlyTriangles();
-    // triQuad.ComputeNormals();
-    //
-    // printf("Loaded TriquadMesh");
-    //
-    // // std::cerr << "mesh.uv.size()=" << triQuad.uv.size()
-    // // << "  triIndices.size()=" << triQuad.triIndices.size() << "\n";
-    //
-    //
-    // pbrt::PCGSampling sampler;
-    //
-    // std::vector<Float> densityMapData;
-    // int nu, nv;
-    //
-    // std::tie(densityMapData, nu, nv) = sampler.loadDensityMap(densityMapFilename);
-    //
-    // printf("desnityMapdata loaded with sampler.loadDensityMap\n");
-    //
-    // // define the UV domain we want to sample over (i think this is done in sampleUVValues)
-    // Bounds2f domain(Point2f(0, 0), Point2f(1, 1));
-    //
-    // // get nSamples samples from the sampler
-    // // const int nSamples = 30;
-    // std::vector<Point2f> uvSamples = sampler.sampleUVValues({densityMapData, nu, nv}, nSamples);
-    // printf("Sampled UV values\n");
-    //
-    // // std::cout << "Got " << uvSamples.size() << " UV samples\n";
-    //
-    // // for each UV, project to 3D + normal, then build a transform
-    // std::vector<class Transform> sampleXforms;
-    // sampleXforms.reserve(uvSamples.size());
-    // for (Point2f uv : uvSamples) {
-    //     // returns a list of hit points + the interpolated normal
-    //
-    //     Point2f flippedUV = Point2f(uv.x, 1 - uv.y);
-    //
-    //     std::vector<SampleOnMesh> samples = findSampleOnMesh(&triQuad, flippedUV);
-    //     // std::cerr << "  UV " << uv << " -> " << samples.size() << " hits\n";
-    //     if (samples.empty()) { continue; }
-    //
-    //
-    //     const SampleOnMesh &s = samples[0];
-    //
-    //     sampleXforms.push_back(AlignZToNormal(s.p, s.n));
-    //
-    //     //TODO: Instance procedural
-    //     // Procedural mesh("../models/epic_model/models/vegetation/leaf.ply",
-    //     //                 "vegetation",
-    //     //                 "coateddiffuse",
-    //     //                 "../models/epic_model/models/textures/fauna/Bush_2.png",
-    //     //                 "../models/epic_model/models/textures/fauna/Bush_2_Bump.png",
-    //     //                 "",
-    //     //                 "../models/epic_model/models/textures/fauna/Bush_2_Opacity.png");
-    //
-    //     // Procedural mesh("../models/epic_model/models/vegetation/test_veg.ply",
-    //     //                     "vegetation",
-    //     //                     "coateddiffuse",
-    //     //                     "../models/epic_model/models/textures/fauna/FULLA-ARBRE2.png",
-    //     //                     "",
-    //     //                     "",
-    //     //                     "../models/epic_model/models/textures/fauna/fullalfa.png");
-    //
-    //     Procedural mesh(meshFilename,
-    //                     namedMaterial,
-    //                     materialType,
-    //                     textureName,
-    //                     bumpMapName,
-    //                     normalMapName,
-    //                     opacityMapName);
-    //
-    //     // Procedural(const std::string& filepath,
-    //     // const std::string &namedMaterial = "", // Optional
-    //     // const std::string &materialType = "",
-    //     // const std::string &texture = "",
-    //     // const std::string &bumpMap = "",
-    //     // const std::string &normalMap = "",
-    //     // const std::string &opacityMap = "");
-    //     //
-    //
-    //
-    //     // TODO: Instance exporter
-    //     PBRTExporter exporter(mesh);
-    //
-    //     // TODO: Call the export method
-    //     // exporter.exportInstances(sampleXforms, "../models/epic_model/models/vegetation/instances.pbrt");
-    //     exporter.exportInstances(sampleXforms, outputFilePath);
-    //
-    //     printf("Done with one sample, exported to: %s\n", outputFilePath.c_str());
-    // }
-    // printf("Done exporting procedural mesh with name: %s\n", name.c_str());
     makePCG(targetMeshFilename,
             densityMapFilename,
             nSamples,
@@ -792,7 +675,6 @@ void BasicSceneBuilder::ProceduralMesh(const std::string &name, ParsedParameterV
             normalMapName,
             opacityMapName,
             outputFilePath);
-    // makePCG();
 }
 
 
